@@ -1,16 +1,11 @@
 package com.javafx.terminmanagement.Controllers;
 
-import com.javafx.terminmanagement.StartApplication;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 /**
  * enthält alle wichtigen Funktionen für die Arbeit mit der Mainstage
  * @param stage Hauptstage der Anwendung
+ * @param instance
  */
 public class MasterController {
     private static MasterController instance;
