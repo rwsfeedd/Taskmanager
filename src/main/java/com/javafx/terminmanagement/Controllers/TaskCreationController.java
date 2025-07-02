@@ -29,8 +29,13 @@ public class TaskCreationController {
         Stage stage = controller.getStage();
 
         //Die Objekthierarchie aus dem zugehörigen XML Dokument laden
-        FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("mainWindow-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 640, 480);
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("mainWindow-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 640, 480);
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+
 
         //Stage initialisieren und darstellen
         stage.setTitle("Terminmanagement");
