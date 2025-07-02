@@ -4,8 +4,6 @@ import javafx.stage.Stage;
 
 /**
  * enthält alle wichtigen Funktionen für die Arbeit mit der Mainstage
- * @param stage Hauptstage der Anwendung
- * @param instance
  */
 public class MasterController {
     private static MasterController instance;
