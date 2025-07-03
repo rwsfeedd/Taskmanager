@@ -1,14 +1,11 @@
 package com.javafx.terminmanagement.Controllers;
 
+import com.javafx.terminmanagement.Model;
 import com.javafx.terminmanagement.StartApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class TaskCreationController {
 
@@ -24,7 +21,7 @@ public class TaskCreationController {
     protected void onCancelButtonClick(){
 
         //Hauptstage vom Mastercontroller holen
-        MasterController controller = MasterController.getInstance();
+        Model controller = Model.getInstance();
         Stage stage = controller.getStage();
 
         try{

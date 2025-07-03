@@ -8,8 +8,6 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 
-import com.javafx.terminmanagement.Controllers.MasterController;
-
 public class StartApplication extends Application {
 
     @Override
@@ -26,7 +24,7 @@ public class StartApplication extends Application {
         }
 
         //Weitergabe der Hauptstage an den Hauptcontroller
-        MasterController masterController = new MasterController(stage);
+        Model model = new Model(stage);
 
         //Hauptfenster laden und anzeigen
         FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("mainWindow-view.fxml"));

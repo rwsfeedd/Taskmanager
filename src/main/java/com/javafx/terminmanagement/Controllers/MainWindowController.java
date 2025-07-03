@@ -1,18 +1,13 @@
 package com.javafx.terminmanagement.Controllers;
 
+import com.javafx.terminmanagement.Model;
 import com.javafx.terminmanagement.StartApplication;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class MainWindowController {
     @FXML
@@ -32,7 +27,7 @@ public class MainWindowController {
     protected void onTaskCreateButtonClick(){
 
         //Hauptstage vom Mastercontroller holen
-        MasterController controller = MasterController.getInstance();
+        Model controller = Model.getInstance();
         Stage stage = controller.getStage();
 
         try{
