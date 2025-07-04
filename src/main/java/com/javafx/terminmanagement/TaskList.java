@@ -25,8 +25,4 @@ public class TaskList {
         return false;//false zurückgeben, falls element schon vorhanden
     }
 
-    public LinkedList<Task> getList() {
-        //Rückgabe einer tiefen Kopie der Liste, wenn Liste != null
-        return allTasksList;
-    }
 }
