@@ -37,13 +37,14 @@ public class StartApplication extends Application {
         Task task = new Task("yeye", true);
         TaskList liste = new TaskList("liste");
 
-        System.out.println(liste.getList().size());//Wie werden leere Listen behandelt oder verarbeitet
         try {
+
+            //System.out.println(liste.getList().getFirst().getName());//Wie werden leere Listen behandelt oder verarbeitet
             liste.addTask(task);
+            //System.out.println(liste.getList().getFirst().getName());//Aufgabe richtig darstellen durch toString() in Klasse Task
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println(liste.getList().getFirst());//Aufgabe richtig darstellen durch toString() in Klasse Task
 
     }
 
