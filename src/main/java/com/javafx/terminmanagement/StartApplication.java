@@ -32,6 +32,19 @@ public class StartApplication extends Application {
         stage.setTitle("Terminmanagement");
         stage.setScene(scene);
         stage.show();
+
+        //Testing TaskList
+        Task task = new Task("yeye", true);
+        TaskList liste = new TaskList("liste");
+
+        System.out.println(liste.getList().size());//Wie werden leere Listen behandelt oder verarbeitet
+        try {
+            liste.addTask(task);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(liste.getList().getFirst());//Aufgabe richtig darstellen durch toString() in Klasse Task
+
     }
 
     public static void main(String[] args) {
