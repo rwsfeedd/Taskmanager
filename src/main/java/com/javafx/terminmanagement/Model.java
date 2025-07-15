@@ -1,6 +1,8 @@
 package com.javafx.terminmanagement;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
 import javafx.stage.Stage;
 
 import java.util.LinkedList;
@@ -11,11 +13,13 @@ import java.util.LinkedList;
 public class Model {
     private static Model instance;
     private static Stage stage;
-    private TaskList currentTasks;
+    private final SimpleListProperty<Task> currentTasks;
 
     public Model(Stage stage) {
         Model.stage = stage;
-        this.currentTasks = new TaskList();
+        currentTasks = new SimpleListProperty<Task>(FXCollections.observableArrayList());
+        currentTasks.add(new Task("ModelAufg", true));
+
     }
 
     public boolean writeTask(Task task) {
@@ -55,7 +59,7 @@ public class Model {
         return stage;
     }
 
-    public TaskList getCurrentTasks() {
+    public SimpleListProperty<Task> getCurrentTasks() {
         return currentTasks;
     }
 }
