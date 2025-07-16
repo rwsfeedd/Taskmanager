@@ -1,7 +1,10 @@
 package com.javafx.terminmanagement;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleListProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.stage.Stage;
 
@@ -12,18 +15,29 @@ import java.util.LinkedList;
  */
 public class Model {
     private static Model instance;
-    private static Stage stage;
+    private static Stage stage;//static nötig?
+
     private final SimpleListProperty<Task> currentTasks;
+    private final SimpleStringProperty newTaskNameProp;
+    private final SimpleBooleanProperty newTaskActiveProp;
 
     public Model(Stage stage) {
         Model.stage = stage;
+        //Initialisierung der aktuellen Taskliste
         currentTasks = new SimpleListProperty<Task>(FXCollections.observableArrayList());
-        currentTasks.add(new Task("ModelAufg", true));
+
+        newTaskNameProp = new SimpleStringProperty();
+        newTaskNameProp.set("");
+
+        newTaskActiveProp = new SimpleBooleanProperty();
+        newTaskActiveProp.set(true);
+
 
     }
 
-    public boolean writeTask(Task task) {
-        return currentTasks.add(task);
+    public boolean writeNewTask() {
+        //Validierung??
+        return currentTasks.add(new Task(newTaskNameProp.getValue(), newTaskActiveProp.getValue()));
     }
 
     public Task readTask(String name) {
@@ -61,5 +75,13 @@ public class Model {
 
     public SimpleListProperty<Task> getCurrentTasks() {
         return currentTasks;
+    }
+
+    public SimpleBooleanProperty getNewTaskActiveProp() {
+        return newTaskActiveProp;
+    }
+
+    public SimpleStringProperty getNewTaskNameProp() {
+        return newTaskNameProp;
     }
 }

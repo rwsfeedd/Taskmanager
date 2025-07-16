@@ -18,31 +18,21 @@ public class TaskCreationController {
     RadioButton buttonSetActive;
     @FXML
     RadioButton buttonSetInactive;
+    @FXML
     ToggleGroup groupButtonsActive;
 
     public void initialize() {
-        //ToggleGroup isnt properly set up -> only one button should be accepted
-        groupButtonsActive = new ToggleGroup();
-        System.out.println("ToggleGroup instantiated: " + groupButtonsActive.toString());
-
-        RadioButton buttonSetActive = new RadioButton();
-        buttonSetActive.setToggleGroup(groupButtonsActive);
-        buttonSetActive.setSelected(true);
-        System.out.println("RadioButtonActive set: " + buttonSetActive.getToggleGroup().toString());
-
-        RadioButton buttonSetInactive = new RadioButton();
-        buttonSetInactive.setToggleGroup(groupButtonsActive);
-        System.out.println("RadioButtonInactive set: " + buttonSetInactive.getToggleGroup().toString());
-
+        Model model = Model.getInstance();
+        //Binding von Aufgabenstatus
+        model.getNewTaskActiveProp().bindBidirectional(buttonSetActive.selectedProperty());
+        //Binding von Aufgabenname
+        model.getNewTaskNameProp().bindBidirectional(textfieldName.textProperty());
     }
 
     @FXML
     protected void onTaskCreateButtonClick() {
         Model model = Model.getInstance();
-        Task task = new Task(textfieldName.getCharacters().toString(), true);
-        model.writeTask(task);
-
-
+        model.writeNewTask();
     }
 
     /**

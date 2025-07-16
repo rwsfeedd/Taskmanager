@@ -12,6 +12,7 @@
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.Group?>
+<?import javafx.scene.layout.HBox?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.javafx.terminmanagement.Controllers.TaskCreationController">
     <center>
@@ -19,10 +20,19 @@
             <Label text="Name"/>
             <TextField fx:id="textfieldName" promptText="Name der Aufgabe"/>
             <Label text="Priorität"/>
+            <HBox>
+                <!--4 ToggleButtons für Prioritäten-->
+            </HBox>
             <Label text="Zeitaufnahme"/>
             <Label text="Status"/>
-            <RadioButton fx:id="buttonSetActive" text="Aktiv"/>
-            <RadioButton fx:id="buttonSetInactive" text="Inaktiv"/>
+            <HBox>
+                <fx:define>
+                    <ToggleGroup fx:id="groupButtonsActive"/>
+                </fx:define>
+                <!--2 ToggleButtons für Status-->
+                <RadioButton fx:id="buttonSetActive" text="Aktiv" selected="true" toggleGroup="$groupButtonsActive"/>
+                <RadioButton fx:id="buttonSetInactive" text="Inaktiv" toggleGroup="$groupButtonsActive"/>
+            </HBox>
         </VBox>
 
     </center>
