@@ -1,8 +1,17 @@
 {
+  "Today": [
+    "hashTask11",
+    "hashTask2",
+    "hashTask3",
+    "hashTask4"
+  ],
   "Haushalt": [
     {
       "name": "Aufwaschen",
-      "Prio": "2"
+      "Prio": "2",
+      "Zeit": [
+        "2:33", "3:44"
+      ]
     },
     {
       "name": "Klo putzen",
