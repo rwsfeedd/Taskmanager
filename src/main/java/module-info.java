@@ -1,6 +1,7 @@
 module com.javafx.terminmanagement {
     requires javafx.controls;
     requires javafx.fxml;
+    requires com.google.gson;
 
 
     opens com.javafx.terminmanagement to javafx.fxml;

@@ -1,8 +1,10 @@
 package com.javafx.terminmanagement;
 
-public class Task {
-    String name;
-    boolean active;
+import java.io.Serializable;
+
+public class Task implements Serializable {
+    private String name;
+    private boolean active;
 
     /**
      *
