@@ -16,6 +16,7 @@
     <right>
         <VBox>
             <Button text="Aufgabe erstellen" onAction="#onTaskCreateButtonClick"/>
+            <Button text="Aufgabenübersicht" onAction="#onTaskOverviewButtonClick"/>
         </VBox>
     </right>
 </BorderPane>
