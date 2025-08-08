@@ -3,10 +3,7 @@ package com.javafx.terminmanagement;
 import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.stage.Stage;
 
@@ -28,7 +25,9 @@ public class Model {
     private final SimpleListProperty<Task> currentTasks;
     //Propertys für TaskCreationWindowView
     private final SimpleStringProperty newTaskNameProp;
-    private final SimpleBooleanProperty newTaskActiveProp;
+    private final SimpleIntegerProperty newTaskRepeatProp;
+    private final SimpleBooleanProperty newTaskRolloverProp;
+    private final SimpleBooleanProperty newTaskCheckNeedProp;
 
     public Model(Stage stage) {
         Model.stage = stage;
@@ -38,10 +37,14 @@ public class Model {
         newTaskNameProp = new SimpleStringProperty();
         newTaskNameProp.set("");
 
-        newTaskActiveProp = new SimpleBooleanProperty();
-        newTaskActiveProp.set(true);
+        newTaskRepeatProp = new SimpleIntegerProperty();
+        newTaskRepeatProp.set(0);
 
+        newTaskRolloverProp = new SimpleBooleanProperty();
+        newTaskRolloverProp.set(false);
 
+        newTaskCheckNeedProp = new SimpleBooleanProperty();
+        newTaskCheckNeedProp.set(false);
     }
 
     public boolean writeNewTask() {
@@ -109,11 +112,19 @@ public class Model {
         return currentTasks;
     }
 
-    public SimpleBooleanProperty getNewTaskActiveProp() {
-        return newTaskActiveProp;
-    }
-
     public SimpleStringProperty getNewTaskNameProp() {
         return newTaskNameProp;
+    }
+
+    public SimpleIntegerProperty getNewTaskRepeatProp() {
+        return newTaskRepeatProp;
+    }
+
+    public SimpleBooleanProperty getNewTaskRolloverProp() {
+        return newTaskRolloverProp;
+    }
+
+    public SimpleBooleanProperty getNewTaskCheckNeedProp() {
+        return newTaskCheckNeedProp;
     }
 }

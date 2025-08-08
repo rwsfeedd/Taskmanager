@@ -5,10 +5,12 @@ import java.util.Date;
 
 public class Task implements Serializable {
     private String name;
-    private int dayRepeat; // 0->keine Wiederholung; 1->jeden Tag; 2->aller 2 Tage
-    private int nRepeat; // 0->keine Wiederholung; 1->1mal Wiederholen; 2->2mal Wiederholen //dayRepeat und nRepeat zusammenarbeit bei Tageswechsel?
+    //private boolean active; //
+    private int repeat; // 0->keine Wiederholung; 1->jeden Tag; 2->aller 2 Tage
+    //private int nRepeat; // 0->keine Wiederholung; 1->1mal Wiederholen; 2->2mal Wiederholen //dayRepeat und nRepeat zusammenarbeit bei Tageswechsel?
     private boolean rollover; // in nächsten Tag tun, wenn nicht gemacht
-    private Date doneLast; // bei erstem Auftreten Fehler im zusammenhang mit repeat
+    private boolean checkNeed; // Aufgabe täglich anbieten zur Bearbeitung
+    //private Date doneLast; // bei erstem Auftreten Fehler im Zusammenhang mit repeat
     //rollover = true, repeat = 1, -> Aufgaben dürfen nicht mehrmals in einen Tag geschrieben werden?? ->Zähneputzen2xtgl
 
     /**
@@ -16,9 +18,11 @@ public class Task implements Serializable {
      * @param name  Name der Aufgabe
      * @param active Aktivitaets- und Bearbeitungszustand
      */
-    public Task(String name, boolean active) {
+    public Task(String name, int repeat, boolean rollover, boolean checkNeed) {
         this.name = name;
-        this.active = active;
+        this.repeat = repeat;
+        this.rollover = rollover;
+        this.checkNeed = checkNeed;
     }
 
     public boolean isNull() {
@@ -29,22 +33,38 @@ public class Task implements Serializable {
     }
 
     public String toString() {
-        return "Aufgabenname: " + name + ", Aktiv: " + active;
+        return "Aufgabenname: " + name + ", Wiederholung: " + repeat + ", Uebertragen: " + rollover;
     }
 
     public String getName() {
         return name;
     }
 
-    public boolean getActive() {
-        return active;
+    public int getRepeat() {
+        return repeat;
+    }
+
+    public boolean getRollover() {
+        return rollover;
+    }
+
+    public boolean getCheckNeed() {
+        return checkNeed;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
+    public void setRepeat(int repeat) {
+        this.repeat = repeat;
+    }
+
+    public void setRollover(boolean rollover) {
+        this.rollover = rollover;
+    }
+
+    public void setCheckNeed(boolean checkNeed) {
+        this.checkNeed = checkNeed;
     }
 }
