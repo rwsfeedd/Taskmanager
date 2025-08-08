@@ -6,7 +6,7 @@ import java.util.Date;
 public class Task implements Serializable {
     private String name;
     private int dayRepeat; // 0->keine Wiederholung; 1->jeden Tag; 2->aller 2 Tage
-    private int nRepeat; // 0->keine Wiederholung; 1->1mal Wiederholen; 2->3mal Wiederholen //dayRepeat und nRepeat zusammenarbeit bei Tageswechsel?
+    private int nRepeat; // 0->keine Wiederholung; 1->1mal Wiederholen; 2->2mal Wiederholen //dayRepeat und nRepeat zusammenarbeit bei Tageswechsel?
     private boolean rollover; // in nächsten Tag tun, wenn nicht gemacht
     private Date doneLast; // bei erstem Auftreten Fehler im zusammenhang mit repeat
     //rollover = true, repeat = 1, -> Aufgaben dürfen nicht mehrmals in einen Tag geschrieben werden?? ->Zähneputzen2xtgl
