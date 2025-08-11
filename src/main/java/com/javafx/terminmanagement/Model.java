@@ -1,6 +1,7 @@
 package com.javafx.terminmanagement;
 
 import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
@@ -8,6 +9,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 
 /**
@@ -32,10 +34,42 @@ public class Model {
         Model.stage = stage;
     }
 
+    public void writeJson() {
+        try{
+
+            File testdat = new File(new File("data"), "SimpleWriteTest.json");
+            //File erstellung bei Endprodukt nicht vergessen
+            testdat.createNewFile();
+            try(FileWriter fileWriter = new FileWriter(testdat);
+                JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
+                jsonWriter.setIndent("    ");
+                writeTaskArray(jsonWriter);
+
+            }
+
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void writeTaskArray(JsonWriter jsonWriter) throws Exception{
+        jsonWriter.beginArray();
+        writeTask(jsonWriter);
+        jsonWriter.endArray();
+    }
+
+    public void writeTask(JsonWriter jsonWriter) throws Exception{
+       jsonWriter.beginObject();
+       jsonWriter.name("name").value(newTaskNameProperty.getValue());
+       jsonWriter.name("repeat").value(newTaskRepeatProperty.getValue());
+       jsonWriter.name("rollover").value(newTaskRolloverProperty.getValue().toString());
+       jsonWriter.endObject();
+    }
+
     public boolean writeNewTask() {
         //Validierung??
         //neue Liste in ListProperty einlesen
-
+        writeJson();
         return currentTasks.add(new Task(newTaskNameProperty.getValue(), Integer.parseInt(newTaskRepeatProperty.getValue()), newTaskRolloverProperty.getValue()));
     }
 
