@@ -36,7 +36,6 @@ public class Model {
 
     public void writeJson() {
         try{
-
             File testdat = new File(new File("data"), "SimpleWriteTest.json");
             //File erstellung bei Endprodukt nicht vergessen
             testdat.createNewFile();
@@ -44,7 +43,6 @@ public class Model {
                 JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
                 jsonWriter.setIndent("    ");
                 writeTaskArray(jsonWriter);
-
             }
 
         }catch(Exception e) {
@@ -67,7 +65,13 @@ public class Model {
     }
 
     public boolean writeNewTask() {
-        //Validierung??
+        //Validierung
+            //ist Name nicht leerer String oder null?
+            //ist Aufgabenname schon vorhanden?
+            //ist Wiederholung eine Zahl?
+            //bei Wiederholung Untergrenze=0 und Obergrenze?
+
+
         //neue Liste in ListProperty einlesen
         writeJson();
         return currentTasks.add(new Task(newTaskNameProperty.getValue(), Integer.parseInt(newTaskRepeatProperty.getValue()), newTaskRolloverProperty.getValue()));

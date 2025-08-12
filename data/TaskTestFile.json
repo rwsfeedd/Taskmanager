@@ -1,14 +1,16 @@
 {
   "Today": [
-    "hashTask11",
-    "hashTask2",
+    {
+      "name": "taskname1",
+      "done": "true"
+    },
+    "taskname2",
     "hashTask3",
     "hashTask4"
   ],
   "Haushalt": [
     {
       "name": "Aufwaschen",
-      "Prio": "2",
       "Zeit": [
         "2:33", "3:44"
       ]
