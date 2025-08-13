@@ -1,25 +1,13 @@
 {
-  "Today": [
-    {
-      "name": "taskname1",
-      "done": "true"
-    },
-    "taskname2",
-    "hashTask3",
-    "hashTask4"
-  ],
-  "Haushalt": [
+  "allTasks": [
     {
       "name": "Aufwaschen",
-      "Zeit": [
-        "2:33", "3:44"
-      ]
+      "repeat": "0",
+      "active": "true"
     },
     {
       "name": "Klo putzen",
       "Prio": "2"
     }
-  ],
-  "inactiv": [
   ]
 }

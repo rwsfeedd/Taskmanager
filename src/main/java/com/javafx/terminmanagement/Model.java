@@ -19,15 +19,15 @@ public class Model {
     private static Model instance;
     private static Stage stage;//static nötig?
 
-
     private File dataDir;
+    private File task
 
     //Property für MainWindowView
     private final SimpleListProperty<Task> currentTasks  = new SimpleListProperty<Task>(FXCollections.observableArrayList());
     //Propertys für TaskCreationWindowView
     private final SimpleStringProperty newTaskNameProperty = new SimpleStringProperty("");
     private final SimpleStringProperty newTaskRepeatProperty = new SimpleStringProperty("1");
-    private final SimpleBooleanProperty newTaskRolloverProperty  = new SimpleBooleanProperty(false);
+    private final SimpleBooleanProperty newTaskActiveProperty = new SimpleBooleanProperty(false);
     //private final SimpleBooleanProperty newTaskCheckNeedProperty;
 
     public Model(Stage stage) {
@@ -60,7 +60,7 @@ public class Model {
        jsonWriter.beginObject();
        jsonWriter.name("name").value(newTaskNameProperty.getValue());
        jsonWriter.name("repeat").value(newTaskRepeatProperty.getValue());
-       jsonWriter.name("rollover").value(newTaskRolloverProperty.getValue().toString());
+        jsonWriter.name("rollover").value(newTaskActiveProperty.getValue().toString());
        jsonWriter.endObject();
     }
 
@@ -74,7 +74,7 @@ public class Model {
 
         //neue Liste in ListProperty einlesen
         writeJson();
-        return currentTasks.add(new Task(newTaskNameProperty.getValue(), Integer.parseInt(newTaskRepeatProperty.getValue()), newTaskRolloverProperty.getValue()));
+        return currentTasks.add(new Task(newTaskNameProperty.getValue(), Integer.parseInt(newTaskRepeatProperty.getValue()), newTaskActiveProperty.getValue()));
     }
 
 
@@ -175,8 +175,8 @@ public class Model {
         return newTaskRepeatProperty;
     }
 
-    public SimpleBooleanProperty newTaskRolloverProperty() {
-        return newTaskRolloverProperty;
+    public SimpleBooleanProperty newTaskActiveProperty() {
+        return newTaskActiveProperty;
     }
 
     /*

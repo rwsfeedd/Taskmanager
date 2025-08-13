@@ -1,0 +1,20 @@
+{
+  "dateToday": "03.04.2002",
+  "tasksToday": [
+    {
+      "taskName": "taskname1",
+      "taskDone": "true"
+    },
+    {
+      "taskName": "taskname2",
+      "taskDone": "false"
+    }
+  ],
+  "previousTasks": [
+    {
+      "taskName": "tasks",
+      "dates": [
+      ]
+    }
+  ]
+}

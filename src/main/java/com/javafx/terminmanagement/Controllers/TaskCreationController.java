@@ -16,6 +16,9 @@ public class TaskCreationController {
     @FXML
     RadioButton buttonSetTrue;
 
+    /**
+     * Initialisierung des Aufgabenerstellungsfensters
+     */
     public void initialize() {
         Model model = Model.getInstance();
         //Binding von Aufgabenname
@@ -23,17 +26,20 @@ public class TaskCreationController {
         //Binding von Aufgabenwiederholung
         model.newTaskRepeatProperty().bindBidirectional(textfieldRepeat.textProperty());
         //Binding von Aufgabenrollover
-        model.newTaskRolloverProperty().bindBidirectional(buttonSetTrue.selectedProperty());
+        model.newTaskActiveProperty().bindBidirectional(buttonSetTrue.selectedProperty());
     }
 
+    /**
+     * Knopf um erstellte Aufgabe zu Speichern
+     */
     @FXML
-    protected void onTaskCreateButtonClick() {
+    protected void onSaveButtonClick() {
         Model model = Model.getInstance();
         model.writeNewTask();
     }
 
     /**
-     * Hauptfenster laden und anzeigen
+     * Knopf um Aufgabenübersicht anzuzeigen
      */
     @FXML
     protected void onCancelButtonClick(){
@@ -44,7 +50,7 @@ public class TaskCreationController {
 
         try{
             //Die Objekthierarchie aus dem zugehörigen XML Dokument laden
-            FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("mainWindow-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("taskOverview-view.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 640, 480);
 
             //Stage initialisieren und darstellen

@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.AnchorPane?>
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.javafx.terminmanagement.Controllers.MainWindowController">
     <center>
@@ -15,8 +16,9 @@
     </center>
     <right>
         <VBox>
-            <Button text="Aufgabe erstellen" onAction="#onTaskCreateButtonClick"/>
             <Button text="Aufgabenübersicht" onAction="#onTaskOverviewButtonClick"/>
+            <Button text="Aufgabe austragen" onAction="#onTaskSignOutButtonClick"/>
+            <Button text="Aufgabe fertigstellen" onAction="#onTaskDoneButtonClick"/>
         </VBox>
     </right>
 </BorderPane>

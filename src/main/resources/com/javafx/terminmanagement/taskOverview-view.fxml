@@ -11,4 +11,11 @@
     <center>
         <ListView fx:id="taskList"/>
     </center>
+    <right>
+        <VBox>
+            <Button text="Aufgabe erstellen" onAction="#onTaskCreateButtonClick"/>
+            <Button text="zurück" onAction="#onReturnButtonClick"/>
+            <Button text="Aufgabe eintragen" onAction="#onTaskSignInButtonClick"/>
+        </VBox>
+    </right>
 </BorderPane>
