@@ -36,6 +36,19 @@ public class TaskCreationController {
     protected void onSaveButtonClick() {
         Model model = Model.getInstance();
         model.writeNewTask();
+        Stage stage = model.getStage();
+        try{
+            //Die Objekthierarchie aus dem zugehörigen XML Dokument laden
+            FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("taskOverview-view.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 640, 480);
+
+            //Stage initialisieren und darstellen
+            stage.setTitle("Terminmanagement");
+            stage.setScene(scene);
+            stage.show();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
