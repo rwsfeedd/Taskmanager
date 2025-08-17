@@ -9,8 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-
 public class MainWindowController {
     @FXML
     private ListView<Task> taskList;
@@ -20,17 +18,7 @@ public class MainWindowController {
      */
     public void initialize() {
         Model model = Model.getInstance();
-        taskList.itemsProperty().bind(model.getTaskListAllProperty());
-
-        ArrayList<Task> liste;
-        try{
-            liste = model.readJson();
-            for(Task task:liste) {
-                System.out.println(task.toString());
-            }
-        }catch(Exception e) {
-            e.printStackTrace();
-        }
+        taskList.itemsProperty().bind(model.taskListAllProperty());
     }
 
     /**

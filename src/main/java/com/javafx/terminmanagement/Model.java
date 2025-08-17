@@ -34,6 +34,24 @@ public class Model {
 
     public Model(Stage stage) {
         Model.stage = stage;
+
+        //Ordner für Datenspeicherung erstellen, falls noch nicht vorhanden
+        if (!dataDir.exists()) {
+            if (dataDir.mkdir()) {
+                System.out.println("Data-Verzeichnis wurde neu erstellt!");
+            } else {
+                System.err.println("Data-Verzeichnis konnte nicht erstellt werden!");
+            }
+        }
+
+        //Einlesen der Aufgabenliste bei Programmstart
+
+        try {
+            taskListAllProperty.addAll(readJson(fileTasks));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     /**
@@ -81,29 +99,45 @@ public class Model {
         jsonWriter.endObject();
     }
 
-    public void writeNewTask() {
+    /**
+     * @return Rückgabe von "true" nur wenn Aufgabe erfolgreich geschrieben werden konnte
+     */
+    public boolean writeNewTask() {
         //Validierung
-            //ist Name nicht leerer String oder null?
-            //ist Aufgabenname schon vorhanden?
             //ist Wiederholung eine Zahl?
             //bei Wiederholung Untergrenze=0 und Obergrenze?
         //wenn valide
+
+        //Validierung des Namens
+        String name = newTaskNameProperty().getValue();
+        //Test, ob Aufgabenname leer ist
+        if (name.isEmpty()) {
+            System.out.println("Aufgabenname ist leer");
+            return false;
+        }
+        //Test, ob Aufgabenname einzigartig ist
+        for (Task task : taskListAllProperty.getValue()) {
+            if (name.equals(task.getName())) {
+                System.out.println("Aufgabenname ist schon vorhanden");
+                return false;
+            }
+        }
 
         //neue Liste in ListProperty einlesen
         List<Task> listNew = new ArrayList<>(taskListAllProperty.getValue());
 
         Task task = new Task(newTaskNameProperty.getValue(), Integer.parseInt(newTaskRepeatProperty.getValue()), newTaskRolloverProperty.getValue(), true);
-        taskListAllProperty.add(task);
+
+        listNew.add(task);
 
         writeJson(fileTasks, listNew);
-        //die zuletzt hinzugefügte Aufgabe wird irgendwie nie geschrieben
-        //return taskListAllProperty.add(new Task(newTaskNameProperty.getValue(), Integer.parseInt(newTaskRepeatProperty.getValue()), newTaskRolloverProperty.getValue()));
+        taskListAllProperty().getValue().add(task);
+        return true;
     }
 
 
-    public ArrayList<Task> readJson() throws Exception{
-        File testdat = new File(new File("data"), "SimpleTaskTest.json");
-        try (FileReader fileReader = new FileReader(testdat);
+    public ArrayList<Task> readJson(File fileTasks) throws Exception {
+        try (FileReader fileReader = new FileReader(fileTasks);
              JsonReader jsonReader = new JsonReader(fileReader)) {
             return readTasksArray(jsonReader);
         }
@@ -186,7 +220,7 @@ public class Model {
         return stage;
     }
 
-    public SimpleListProperty<Task> getTaskListAllProperty() {
+    public SimpleListProperty<Task> taskListAllProperty() {
         return taskListAllProperty;
     }
 
