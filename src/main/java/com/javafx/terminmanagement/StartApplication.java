@@ -13,16 +13,6 @@ public class StartApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        //Ordner für Datenspeicherung erstellen, falls noch nicht vorhanden
-        //Wegen Schreibrechten checken
-        File directory = new File("data");
-        if (directory.exists() == false) {
-            if (directory.mkdir()) {
-                System.out.println("Data-Verzeichnis konnte erfolgreich erstellt werden!");
-            } else {
-                System.out.println("Data-Verzeichnis konnte nicht erstellt werden!");
-            }
-        }
 
         //Weitergabe der Hauptstage an den Hauptcontroller
         Model model = new Model(stage);
