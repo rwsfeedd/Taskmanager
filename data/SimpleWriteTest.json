@@ -82,5 +82,35 @@
         "repeat": "1",
         "rollover": "true",
         "active": "true"
+    },
+    {
+        "name": "gehal",
+        "repeat": "3",
+        "rollover": "true",
+        "active": "true"
+    },
+    {
+        "name": "as",
+        "repeat": "1",
+        "rollover": "true",
+        "active": "true"
+    },
+    {
+        "name": "adfa",
+        "repeat": "1",
+        "rollover": "true",
+        "active": "true"
+    },
+    {
+        "name": "abbrecheraufgabe",
+        "repeat": "1",
+        "rollover": "true",
+        "active": "true"
+    },
+    {
+        "name": "Abbrecher",
+        "repeat": "1",
+        "rollover": "true",
+        "active": "true"
     }
 ]

@@ -32,6 +32,7 @@ public class Model {
     private final SimpleStringProperty newTaskNameProperty = new SimpleStringProperty("");
     private final SimpleStringProperty newTaskRepeatProperty = new SimpleStringProperty("1");
     private final SimpleBooleanProperty newTaskRolloverProperty = new SimpleBooleanProperty(false);
+    private final SimpleStringProperty newTaskValidationProperty = new SimpleStringProperty();
     //private final SimpleBooleanProperty newTaskCheckNeedProperty;
 
     public Model(Stage stage) {
@@ -64,7 +65,6 @@ public class Model {
      * @return Rückgabe von true, wenn alle Aufgaben erfolgreich in die Datei geschrieben wurden
      */
     public boolean writeJson(File fileTasks, List<Task> listTasks) {
-        System.err.println("Ein Fehler ist aufgetreten");
         try{
 
             if (!fileTasks.exists()) {
@@ -111,19 +111,36 @@ public class Model {
             //bei Wiederholung Untergrenze=0 und Obergrenze?
         //wenn valide
 
+        boolean isValid = true;
+        StringBuilder stringInvalid = new StringBuilder();
         //Validierung des Namens
         String name = newTaskNameProperty().getValue();
         //Test, ob Aufgabenname leer ist
         if (name.isEmpty()) {
-            System.out.println("Aufgabenname ist leer");
-            return false;
-        }
-        //Test, ob Aufgabenname einzigartig ist
-        for (Task task : taskListAllProperty.getValue()) {
-            if (name.equals(task.getName())) {
-                System.out.println("Aufgabenname ist schon vorhanden");
-                return false;
+            stringInvalid.append("Aufgabenname ist leer! \n");
+            isValid = false;
+        } else {
+            //Test, ob Aufgabenname einzigartig ist
+            for (Task task : taskListAllProperty.getValue()) {
+                if (name.equals(task.getName())) {
+                    stringInvalid.append("Aufgabenname ist schon vorhanden! \n");
+                    isValid = false;
+                }
             }
+        }
+
+        //Validierung Aufgabenwiederholung
+        if (newTaskRepeatProperty().getValue().isEmpty()) {
+            stringInvalid.append("Aufgabenwiederholung ist leer! \n");
+            isValid = false;
+        } else {
+            //Test, ob Aufgabenwiederholung einem Integer entspricht
+        }
+
+
+        if (isValid == false) {
+            this.setNewTaskValidationProperty(stringInvalid.toString());
+            return false;
         }
 
         //neue Liste in ListProperty einlesen
@@ -237,6 +254,14 @@ public class Model {
 
     public SimpleBooleanProperty newTaskActiveProperty() {
         return newTaskRolloverProperty;
+    }
+
+    public void setNewTaskValidationProperty(String stringInvalid) {
+        newTaskValidationProperty().setValue(stringInvalid);
+    }
+
+    public SimpleStringProperty newTaskValidationProperty() {
+        return newTaskValidationProperty;
     }
 
     /*

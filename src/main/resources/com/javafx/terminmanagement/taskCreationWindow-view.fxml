@@ -34,6 +34,7 @@
                              toggleGroup="$groupButtonsActive"/>
                 <RadioButton text="deaktiviert" toggleGroup="$groupButtonsActive"/>
             </HBox>
+            <Label fx:id="validationLabel" textFill="red"/>
         </VBox>
 
     </center>
