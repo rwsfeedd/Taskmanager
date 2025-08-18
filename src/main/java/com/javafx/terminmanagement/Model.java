@@ -21,7 +21,9 @@ public class Model {
     private static Model instance;
     private static Stage stage;//static nötig?
 
+    //Ordner für Datenarbeit
     private final File dataDir = new File("data");
+    //Datei für Datenarbeit
     private final File fileTasks = new File(dataDir, "SimpleWriteTest.json");
 
     //Property für MainWindowView
@@ -41,6 +43,7 @@ public class Model {
                 System.out.println("Data-Verzeichnis wurde neu erstellt!");
             } else {
                 System.err.println("Data-Verzeichnis konnte nicht erstellt werden!");
+
             }
         }
 
