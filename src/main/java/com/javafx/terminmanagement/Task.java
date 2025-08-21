@@ -14,19 +14,16 @@ public class Task implements Serializable {
     //rollover = true, repeat = 1, -> Aufgaben dürfen nicht mehrmals in einen Tag geschrieben werden?? ->Zähneputzen2xtgl
 
     //Attribute, die bei Erstellung nicht von Nutzer gemacht werden
-    private boolean active;
 
     /**
      *
      * @param name  Name der Aufgabe
-     * @param active Aktivitaets- und Bearbeitungszustand
      */
-    public Task(String name, int repeat, boolean rollover, boolean active) {
+    public Task(String name, int repeat, boolean rollover) {
         this.name = name;
         this.repeat = repeat;
         this.rollover = rollover;
 
-        this.active = active;
 
         //this.checkNeed = checkNeed;
     }
@@ -54,9 +51,6 @@ public class Task implements Serializable {
         return rollover;
     }
 
-    public boolean isActive() {
-        return active;
-    }
 
     /*
     public boolean getCheckNeed() {
@@ -76,9 +70,6 @@ public class Task implements Serializable {
         this.rollover = rollover;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 
     /*
     public void setCheckNeed(boolean checkNeed) {

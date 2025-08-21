@@ -1,134 +1,112 @@
-{
-    "date": "",
-    "today": [
-        "Aufgabe1", "Aufgabe2", "Aufgabe3"
-    ],
-    "tasks": [
-        {
-            "name": "Aufgabe1",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe2",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe3",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe4",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe6",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe7",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe8",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe9",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe10",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe11",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe12",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe13",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe14",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Aufgabe15",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "gehal",
-            "repeat": "3",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "as",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "adfa",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "abbrecheraufgabe",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "Abbrecher",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "w",
-            "repeat": "1",
-            "rollover": "true",
-            "active": "true"
-        },
-        {
-            "name": "werf",
-            "repeat": "10",
-            "rollover": "true",
-            "active": "true"
-        }
-    ]
-}
+[
+    {
+        "name": "Aufgabe1",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe2",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe3",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe4",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe6",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe7",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe8",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe9",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe10",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe11",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe12",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe13",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe14",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Aufgabe15",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "gehal",
+        "repeat": "3",
+        "rollover": "true"
+    },
+    {
+        "name": "as",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "adfa",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "abbrecheraufgabe",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "Abbrecher",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "w",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "werf",
+        "repeat": "10",
+        "rollover": "true"
+    },
+    {
+        "name": "a",
+        "repeat": "1",
+        "rollover": "true"
+    }
+]

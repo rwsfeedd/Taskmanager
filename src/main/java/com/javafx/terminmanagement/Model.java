@@ -23,12 +23,16 @@ public class Model {
 
     //Ordner für Datenarbeit
     private final File dataDir = new File("data");
-    //Datei für Datenarbeit
-    private final File fileTasks = new File(dataDir, "SimpleWriteTest.json");
 
+    //Dateien für Datenarbeit
+    private final File fileTasks = new File(dataDir, "SimpleWriteTest.json");
+    private final File filePlanning = new File(dataDir, "planning.json");
+
+    private final SimpleListProperty<String> stringListPlanProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
     //Property für MainWindowView
-    private final SimpleListProperty<Task> taskListTodayProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final SimpleListProperty<String> taskListTodoProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
     private final SimpleListProperty<Task> taskListAllProperty = new SimpleListProperty<Task>(FXCollections.observableArrayList());
+
     //Propertys für TaskCreationWindowView
     private final SimpleStringProperty newTaskNameProperty = new SimpleStringProperty("");
     private final SimpleStringProperty newTaskRepeatProperty = new SimpleStringProperty("0");
@@ -51,58 +55,11 @@ public class Model {
         //Einlesen der Aufgabenliste bei Programmstart
         //TODO: Verhalten bei Fehler verbessern, sodass Nutzer diese sieht ohne Commandline
         try {
-            if(!readJsonIntoModel(fileTasks)){
-               System.err.println("Jsondatei konnte nicht eingelesen werden!");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+            taskListAllProperty().addAll(readTasksJson(fileTasks));
+        } catch (IOException iOEx) {
+            iOEx.printStackTrace();
         }
 
-    }
-
-    /**
-     *
-     * @param fileTasks
-     * @param listTasks
-     * @return Rückgabe von true, wenn alle Aufgaben erfolgreich in die Datei geschrieben wurden
-     */
-    public boolean writeJson(File fileTasks, List<Task> listTasks) {
-        try{
-
-            if (!fileTasks.exists()) {
-                if (!fileTasks.createNewFile()) {
-                    System.err.println("Datenfile konnte nicht erstellt werden!");
-                }
-            }
-
-            try (FileWriter fileWriter = new FileWriter(fileTasks);
-                JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
-                jsonWriter.setIndent("    ");
-                writeTaskArray(jsonWriter, listTasks);
-                jsonWriter.flush();
-            }
-        } catch (IOException ioEx) {
-            ioEx.printStackTrace();
-        }
-        return true;
-    }
-
-    public void writeTaskArray(JsonWriter jsonWriter, List<Task> listTasks) throws IOException {
-        jsonWriter.name("tasks");
-        jsonWriter.beginArray();
-        for (Task task : listTasks) {
-            writeTask(jsonWriter, task);
-        }
-        jsonWriter.endArray();
-    }
-
-    public void writeTask(JsonWriter jsonWriter, Task task) throws IOException {
-        jsonWriter.beginObject();
-        jsonWriter.name("name").value(task.getName());
-        jsonWriter.name("repeat").value(Integer.toString(task.getRepeat()));
-        jsonWriter.name("rollover").value(Boolean.toString(task.isRollover()));
-        jsonWriter.name("active").value(Boolean.toString(task.isActive()));
-        jsonWriter.endObject();
     }
 
     /**
@@ -157,13 +114,67 @@ public class Model {
         //neue Liste in ListProperty einlesen
         List<Task> listNew = new ArrayList<>(taskListAllProperty.getValue());
 
-        Task task = new Task(name, repeat, newTaskRolloverProperty.getValue(), true);
+        Task task = new Task(name, repeat, newTaskRolloverProperty.getValue());
 
         listNew.add(task);
 
-        writeJson(fileTasks, listNew);
+        writeTasksJson(fileTasks, listNew);
         taskListAllProperty().getValue().add(task);
         return true;
+    }
+
+    //alle Listen und Datum einlesen
+    public boolean readPlanningJson(File planningFile) {
+
+    }
+
+    public List<String> readTodoArray(JsonReader jsonReader) {
+
+    }
+
+    public List<String> readToday
+
+    /**
+     *
+     * @param fileTasks
+     * @param listTasks
+     * @return Rückgabe von true, wenn alle Aufgaben erfolgreich in die Datei geschrieben wurden
+     */
+    public boolean writeTasksJson(File fileTasks, List<Task> listTasks) {
+        try{
+
+            if (!fileTasks.exists()) {
+                if (!fileTasks.createNewFile()) {
+                    System.err.println("Datenfile konnte nicht erstellt werden!");
+                }
+            }
+
+            try (FileWriter fileWriter = new FileWriter(fileTasks);
+                JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
+                jsonWriter.setIndent("    ");
+                writeTaskArray(jsonWriter, listTasks);
+                jsonWriter.flush();
+            }
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+        return true;
+    }
+
+    public void writeTaskArray(JsonWriter jsonWriter, List<Task> listTasks) throws IOException {
+        jsonWriter.beginArray();
+        for (Task task : listTasks) {
+            writeTask(jsonWriter, task);
+        }
+        jsonWriter.endArray();
+    }
+
+    public void writeTask(JsonWriter jsonWriter, Task task) throws IOException {
+        jsonWriter.beginObject();
+        jsonWriter.name("name").value(task.getName());
+        jsonWriter.name("repeat").value(Integer.toString(task.getRepeat()));
+        jsonWriter.name("rollover").value(Boolean.toString(task.isRollover()));
+        jsonWriter.endObject();
     }
 
     /**
@@ -172,25 +183,16 @@ public class Model {
      * @return
      * @throws Exception
      */
-    public boolean readJsonIntoModel(File fileTasks) throws Exception {
+    public ArrayList<Task> readTasksJson(File fileTasks) throws IOException {
         try (FileReader fileReader = new FileReader(fileTasks);
              JsonReader jsonReader = new JsonReader(fileReader)) {
-            jsonReader.beginObject();
-            switch(jsonReader.nextName()) {
-                case "tasks":
-                    taskListAllProperty().addAll(readTasksArray(jsonReader));
-                    break;
-                case "today":
-                    taskListDailyProperty().
-            }
-            jsonReader.nextName();
+            return readTasksArray(jsonReader);
         }
 
         //Leserechte für Datei sicherstellen sonst Fehlermeldung
-
     }
 
-    public ArrayList<Task> readTasksArray(JsonReader reader) throws Exception{
+    public ArrayList<Task> readTasksArray(JsonReader reader) throws IOException{
         //was passiert bei leeren Array?
         ArrayList<Task> returnArray = new ArrayList<>();
 
@@ -202,7 +204,7 @@ public class Model {
         return returnArray;
     }
 
-    public Task readTask(JsonReader reader) throws Exception{
+    public Task readTask(JsonReader reader) throws IOException{
         //richtiges File öffnen
         //File einlesen
             //Informationen in Graph speichern(aufpassen das Graph nicht zu groß wird wegen Speicher)
@@ -210,7 +212,6 @@ public class Model {
         String name = "";
         int repeat = 0;
         boolean rollover = false;
-        boolean active = false;
 
         try{
             reader.beginObject();
@@ -225,8 +226,10 @@ public class Model {
                     case ("rollover"):
                         rollover = Boolean.parseBoolean(reader.nextString());
                         break;
-                    case ("active"):
-                        active = Boolean.parseBoolean(reader.nextString());
+                    default:
+                        System.err.println("Model: Unbekanntes Aufgabenattribut bei lesen von JSON-File: " +
+                                fileTasks + "!");
+                        reader.nextString();
                         break;
                 }
             }
@@ -235,7 +238,7 @@ public class Model {
         }catch(Exception ex) {
             ex.printStackTrace();
         }
-        return new Task(name, repeat, rollover, active);
+        return new Task(name, repeat, rollover);
     }
 
     /**
@@ -261,6 +264,14 @@ public class Model {
 
     public Stage getStage() {
         return stage;
+    }
+
+    public SimpleListProperty<String> stringListTodayProperty() {
+       return stringListPlanProperty;
+    }
+
+    public SimpleListProperty<String> taskListTodoProperty() {
+        return taskListTodoProperty;
     }
 
     public SimpleListProperty<Task> taskListAllProperty() {
