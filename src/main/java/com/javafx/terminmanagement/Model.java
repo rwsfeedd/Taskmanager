@@ -30,8 +30,8 @@ public class Model {
 
     private final SimpleListProperty<String> stringListPlanProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
     //Property für MainWindowView
-    private final SimpleListProperty<String> taskListTodoProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
-    private final SimpleListProperty<Task> taskListAllProperty = new SimpleListProperty<Task>(FXCollections.observableArrayList());
+    private final SimpleListProperty<String> stringListTodoProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final SimpleListProperty<Task> taskListAllProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     //Propertys für TaskCreationWindowView
     private final SimpleStringProperty newTaskNameProperty = new SimpleStringProperty("");
@@ -42,20 +42,57 @@ public class Model {
 
     public Model(Stage stage) {
         Model.stage = stage;
+        instance = this;
 
-        //Ordner für Datenspeicherung erstellen, falls noch nicht vorhanden
+        //Ordner für Dateiarbeit erstellen, falls noch nicht vorhanden
         if (!dataDir.exists()) {
             if (dataDir.mkdir()) {
-                System.out.println("Data-Verzeichnis wurde neu erstellt!");
+                System.out.println("Data-Verzeichnis wurde erstellt!");
             } else {
-                System.err.println("Data-Verzeichnis konnte nicht erstellt werden!");
+                System.err.println("Model Initialisierung: Data-Verzeichnis existiert nicht und konnte auch nicht erstellt werden!");
+                Platform.exit();
             }
         }
+        //TODO Dateien für Dateiarbeit erstellen, falls noch nicht vorhanden
+        //TODO Fähigkeit zum Schreiben und Lesen testen
+
 
         //Einlesen der Aufgabenliste bei Programmstart
         //TODO: Verhalten bei Fehler verbessern, sodass Nutzer diese sieht ohne Commandline
         try {
+            //vollständige Taskliste mit Werten füllen
             taskListAllProperty().addAll(readTasksJson(fileTasks));
+
+            //Stringliste für Tagesplan und noch zu machende Aufgaben mit Werten füllen
+            readPlanningJson(filePlanning);
+            //noch zu machende Aufgaben mit vollständiger Taskliste abgleichen
+            //TODO: mit sortierter Liste könnte eine sehr viel elegantere Lösung gefunden werden
+            boolean exists;
+            for (String stringTodo : stringListTodoProperty) {
+                exists = false;
+                for (int i = 0; i < taskListAllProperty().getValue().size(); i++) {
+                    if (stringTodo.equals(taskListAllProperty().getValue().get(i).getName())) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (exists == false) {
+                    System.err.println("Aufgabe " + stringTodo + " in Todo exisitiert nicht!");
+                }
+            }
+            //Tagesplan Namen mit noch zu machenden Aufgaben abgleichen
+            for (String stringPlan : stringListPlanProperty) {
+                exists = false;
+                for (String stringTask : stringListTodoProperty) {
+                    if (stringPlan.equals(stringTask)) {
+                        exists = true;
+                        break;
+                    }
+                }
+                if (exists == false) {
+                    System.out.println("Aufgabe " + stringPlan + " in Aufgabenplan exisitiert nicht!");
+                }
+            }
         } catch (IOException iOEx) {
             iOEx.printStackTrace();
         }
@@ -124,15 +161,55 @@ public class Model {
     }
 
     //alle Listen und Datum einlesen
-    public boolean readPlanningJson(File planningFile) {
+    public boolean readPlanningJson(File planningFile) throws IOException {
+        try (FileReader fileReader = new FileReader(planningFile);
+             JsonReader jsonReader = new JsonReader(fileReader)) {
+            jsonReader.beginObject();
+            while (jsonReader.hasNext()) {
+                switch (jsonReader.nextName()) {
+                    case "date":
+                        jsonReader.nextString();
+                        break;
+                    case "today":
+                        stringListPlanProperty.addAll(readPlanArray(jsonReader));
+                        break;
+                    case "todo":
+                        stringListTodoProperty.addAll(readTodoArray(jsonReader));
+                        break;
+                    default:
+                        System.err.println("Unbekannter Name in Datei: " + planningFile);
+                        break;
+                }
+            }
+            jsonReader.endObject();
+        }
 
+        return true;
     }
 
-    public List<String> readTodoArray(JsonReader jsonReader) {
+    public List<String> readTodoArray(JsonReader jsonReader) throws IOException {
+        ArrayList<String> retArray = new ArrayList<>();
 
+        jsonReader.beginArray();
+        while (jsonReader.hasNext()) {
+            retArray.add(jsonReader.nextString());
+        }
+        jsonReader.endArray();
+
+        return retArray;
     }
 
-    public List<String> readToday
+    public List<String> readPlanArray(JsonReader jsonReader) throws IOException {
+        ArrayList<String> retArray = new ArrayList<>();
+
+        jsonReader.beginArray();
+        while (jsonReader.hasNext()) {
+            retArray.add(jsonReader.nextString());
+        }
+        jsonReader.endArray();
+
+        return retArray;
+    }
 
     /**
      *
@@ -181,7 +258,7 @@ public class Model {
      *
      * @param fileTasks
      * @return
-     * @throws Exception
+     * @throws IOException
      */
     public ArrayList<Task> readTasksJson(File fileTasks) throws IOException {
         try (FileReader fileReader = new FileReader(fileTasks);
@@ -271,7 +348,7 @@ public class Model {
     }
 
     public SimpleListProperty<String> taskListTodoProperty() {
-        return taskListTodoProperty;
+        return stringListTodoProperty;
     }
 
     public SimpleListProperty<Task> taskListAllProperty() {

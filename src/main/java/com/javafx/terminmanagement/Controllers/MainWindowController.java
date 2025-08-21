@@ -2,7 +2,6 @@ package com.javafx.terminmanagement.Controllers;
 
 import com.javafx.terminmanagement.Model;
 import com.javafx.terminmanagement.StartApplication;
-import com.javafx.terminmanagement.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,14 +10,14 @@ import javafx.stage.Stage;
 
 public class MainWindowController {
     @FXML
-    private ListView<Task> taskList;
+    private ListView<String> taskList;
 
     /**
      * Initialisierung des MainWindowViews, jedes Mal, wenn der MainWindowView geladen wird
      */
     public void initialize() {
         Model model = Model.getInstance();
-        taskList.itemsProperty().bind(model.taskListAllProperty());
+        taskList.itemsProperty().bind(model.stringListTodayProperty());
     }
 
     /**
