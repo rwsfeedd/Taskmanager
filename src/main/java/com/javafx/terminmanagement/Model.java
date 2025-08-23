@@ -29,6 +29,9 @@ public class Model {
     private final File fileTasks = new File(dataDir, "SimpleWriteTest.json");
     private final File filePlanning = new File(dataDir, "planning.json");
 
+    //Propertys für die Auswahl von einem Element aus einem ListView
+    private final SimpleObjectProperty<Task> selectedTaskProperty = new SimpleObjectProperty<>();
+
     private final SimpleListProperty<String> stringListPlanProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
     //Property für MainWindowView
     private final SimpleListProperty<String> stringListTodoProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
@@ -111,7 +114,7 @@ public class Model {
      * @return Singleton Model
      */
     public static Model getInstance() {
-        //Fehler wenn keine Hauptstage übergeben wurde
+        //Fehler, wenn keine Hauptstage übergeben wurde
         if (stage == null) {
             System.err.println("Model: Bei Programmstart wurde keine Stage uebergeben!");
             Platform.exit();
@@ -125,7 +128,7 @@ public class Model {
         return instance;
     }
 
-    /**
+    /** Neue Aufgabe aus newTask...Property's lesen, in File schreiben und taskListAllProperty aktualisieren
      * @return Rückgabe von "true", nur wenn Aufgabe erfolgreich geschrieben werden konnte
      */
     public boolean writeNewTask() {
@@ -174,15 +177,55 @@ public class Model {
             return false;
         }
 
-        //neue Liste in ListProperty einlesen
-        List<Task> listNew = new ArrayList<>(taskListAllProperty.getValue());
+        //neue Aufgabenliste erstellen, die geschrieben werden soll
+        List<Task> listNew = new ArrayList<>();
+        //alle vorhandenen Aufgaben aus Aufgabenfile einlesen und in neue Liste schreiben
+        try {
+            listNew.addAll(readTasksJson(fileTasks));
+        } catch (IOException ex) {
+            System.out.println("In der writeNewTask-Methode vom Model konnte die Aufgabenliste nicht eingelesen werden!");
+            ex.printStackTrace();
+        }
+        //neue Aufgabe in neue Liste schreiben
+        listNew.add(new Task(name, repeat, newTaskRolloverProperty.getValue()));
 
-        Task task = new Task(name, repeat, newTaskRolloverProperty.getValue());
+        //Aufgaben in File schreiben,und falls dies nicht funktioniert false zurückgeben
+        if (!writeTasksJson(fileTasks, listNew)) return false;
+        //nach erfolgreichem Schreiben taskListAllProperty neu
+        taskListAllProperty().setAll(listNew);
+        //taskListAllProperty().getValue().addAll(listNew);
+        return true;
+    }
 
-        listNew.add(task);
+    //Aufgabe aus selectedTaskProperty lesen, aus Aufgabenfile löschen und taskListAllProperty aktualisieren
+    public boolean writeDeletedTask() {
+        if (selectedTaskProperty().getValue() == null) return false;
+        Task deletedTask = selectedTaskProperty().getValue();
 
-        writeTasksJson(fileTasks, listNew);
-        taskListAllProperty().getValue().add(task);
+        //Aufgabe aus Aufgabenliste löschen
+        ArrayList<Task> listNew = new ArrayList<>(taskListAllProperty());
+        listNew.remove(deletedTask);
+        //neue Aufgabenliste schreiben
+        if (!writeTasksJson(fileTasks, listNew)) {
+            return false;
+        }
+        taskListAllProperty().setAll(listNew);
+
+        //Aufgabe aus TodoListe und planListe löschen und in Datei schreiben, bei vorhandensein
+        if (stringListTodoProperty().contains(deletedTask.getName())) {
+            ArrayList<String> todoListNew = new ArrayList<>(stringListTodoProperty());
+            ArrayList<String> planListNew = new ArrayList<>(stringListPlanProperty());
+            todoListNew.remove(deletedTask.getName());
+            if (stringListPlanProperty().contains(deletedTask.getName())) {
+                planListNew.remove(deletedTask.getName());
+            }
+            if (!writePlanningJson(filePlanning, todoListNew, planListNew)) {
+                return false;
+            }
+            stringListPlanProperty().setAll(planListNew);
+            stringListTodoProperty().setAll(todoListNew);
+        }
+
         return true;
     }
 
@@ -193,7 +236,7 @@ public class Model {
     writeDeletePlanString()
      */
 
-    public boolean writePlanningJson(File filePlanning, List<String> listPlan, List<String> listTodo) throws IOException {
+    public boolean writePlanningJson(File filePlanning, List<String> listPlan, List<String> listTodo) {
         try (FileWriter fileWriter = new FileWriter(filePlanning);
              JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
             jsonWriter.setIndent("    ");
@@ -204,6 +247,12 @@ public class Model {
             writeTodoArray(jsonWriter, listTodo);
 
             jsonWriter.endObject();
+
+            //Alle gepufferten Daten fertig schreiben
+            jsonWriter.flush();
+            fileWriter.flush();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
 
@@ -237,8 +286,8 @@ public class Model {
     }
 
 
-    //alle Listen und Datum einlesen
-    public boolean readPlanningJson(File filePlanning) throws IOException {
+    //alle Listen und Datum einlesen in die zugehörigen Propertys
+    public boolean readPlanningJson(File filePlanning) {
         try (FileReader fileReader = new FileReader(filePlanning);
              JsonReader jsonReader = new JsonReader(fileReader)) {
             jsonReader.beginObject();
@@ -259,6 +308,8 @@ public class Model {
                 }
             }
             jsonReader.endObject();
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
         //TODO: Rückgabewert überdenken, da bie Fehlerfall Exception gethrowed wird
         return true;
@@ -307,10 +358,14 @@ public class Model {
                 JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
                 jsonWriter.setIndent("    ");
                 writeTaskArray(jsonWriter, listTasks);
+
+                //Alle Streams fertig schreiben
                 jsonWriter.flush();
+                fileWriter.flush();
             }
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
+            return false;
         }
         return true;
     }
@@ -401,11 +456,15 @@ public class Model {
         return stage;
     }
 
-    public SimpleListProperty<String> stringListTodayProperty() {
+    public SimpleObjectProperty<Task> selectedTaskProperty() {
+        return selectedTaskProperty;
+    }
+
+    public SimpleListProperty<String> stringListPlanProperty() {
        return stringListPlanProperty;
     }
 
-    public SimpleListProperty<String> taskListTodoProperty() {
+    public SimpleListProperty<String> stringListTodoProperty() {
         return stringListTodoProperty;
     }
 

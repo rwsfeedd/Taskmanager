@@ -1,16 +1,6 @@
 [
     {
-        "name": "Aufgabe1",
-        "repeat": "1",
-        "rollover": "true"
-    },
-    {
         "name": "Aufgabe2",
-        "repeat": "1",
-        "rollover": "true"
-    },
-    {
-        "name": "Aufgabe3",
         "repeat": "1",
         "rollover": "true"
     },
@@ -21,11 +11,6 @@
     },
     {
         "name": "Aufgabe6",
-        "repeat": "1",
-        "rollover": "true"
-    },
-    {
-        "name": "Aufgabe7",
         "repeat": "1",
         "rollover": "true"
     },
@@ -41,11 +26,6 @@
     },
     {
         "name": "Aufgabe10",
-        "repeat": "1",
-        "rollover": "true"
-    },
-    {
-        "name": "Aufgabe11",
         "repeat": "1",
         "rollover": "true"
     },
@@ -70,27 +50,7 @@
         "rollover": "true"
     },
     {
-        "name": "gehal",
-        "repeat": "3",
-        "rollover": "true"
-    },
-    {
-        "name": "as",
-        "repeat": "1",
-        "rollover": "true"
-    },
-    {
-        "name": "adfa",
-        "repeat": "1",
-        "rollover": "true"
-    },
-    {
         "name": "abbrecheraufgabe",
-        "repeat": "1",
-        "rollover": "true"
-    },
-    {
-        "name": "Abbrecher",
         "repeat": "1",
         "rollover": "true"
     },
@@ -100,17 +60,32 @@
         "rollover": "true"
     },
     {
-        "name": "werf",
-        "repeat": "10",
+        "name": "neueAufgabe",
+        "repeat": "2",
         "rollover": "true"
     },
     {
-        "name": "a",
+        "name": "NeueAufgabehier",
         "repeat": "1",
         "rollover": "true"
     },
     {
-        "name": "neueAufgabe",
+        "name": "asdf",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "asdfg",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "fewfewef",
+        "repeat": "1",
+        "rollover": "true"
+    },
+    {
+        "name": "grehsafadsga",
         "repeat": "2",
         "rollover": "true"
     }

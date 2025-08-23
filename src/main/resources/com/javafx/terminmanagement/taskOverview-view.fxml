@@ -14,8 +14,9 @@
     <right>
         <VBox>
             <Button text="Aufgabe erstellen" onAction="#onTaskCreateButtonClick"/>
-            <Button text="zurück" onAction="#onReturnButtonClick"/>
+            <Button text="Aufgabe löschen" onAction="#onTaskDeleteButtonClick"/>
             <Button text="Aufgabe eintragen" onAction="#onTaskSignInButtonClick"/>
+            <Button text="zurück" onAction="#onReturnButtonClick"/>
         </VBox>
     </right>
 </BorderPane>

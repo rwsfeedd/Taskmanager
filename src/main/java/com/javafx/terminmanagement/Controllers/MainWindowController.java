@@ -17,7 +17,7 @@ public class MainWindowController {
      */
     public void initialize() {
         Model model = Model.getInstance();
-        taskList.itemsProperty().bind(model.stringListTodayProperty());
+        taskList.itemsProperty().bind(model.stringListPlanProperty());
     }
 
     /**
