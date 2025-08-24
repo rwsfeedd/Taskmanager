@@ -64,7 +64,10 @@ public class TaskOverviewController {
      */
     @FXML
     protected void onTaskSignInButtonClick() {
-
+        Model model = Model.getInstance();
+        if (!model.writeSignInPlan()) {
+            System.out.println("Fehler bei Eintragen der Aufgabe in den Aufgabenplan");
+        }
     }
 
     /**

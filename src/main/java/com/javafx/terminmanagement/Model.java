@@ -229,6 +229,30 @@ public class Model {
         return true;
     }
 
+    public boolean writeSignInPlan() {
+        //Test, ob eine Aufgabe ausgewählt wurde
+        if (selectedTaskProperty().getValue() == null) {
+            return false;
+        }
+
+        Task taskToSignIn = selectedTaskProperty().getValue();
+        ArrayList<String> newList = new ArrayList<>(stringListPlanProperty());
+
+        //Test, ob Aufgabe schon in Plan eingetragen wurde
+        if (newList.contains(taskToSignIn.getName())) {
+            return true;
+        } else {
+            newList.add(taskToSignIn.getName());
+        }
+        //Aufgabe in filePlan schreiben und bei Erfolg in Plannungsliste eintragen
+        if (writePlanningJson(filePlanning, newList, stringListTodoProperty())) {
+            stringListPlanProperty().getValue().add(taskToSignIn.getName());
+        } else {
+            return false;
+        }
+
+        return true;
+    }
     /*
     public boolean writeNewTodoString()
     public boolean writeDeleteTodoString()
@@ -236,7 +260,7 @@ public class Model {
     writeDeletePlanString()
      */
 
-    public boolean writePlanningJson(File filePlanning, List<String> listPlan, List<String> listTodo) {
+    private boolean writePlanningJson(File filePlanning, List<String> listPlan, List<String> listTodo) {
         try (FileWriter fileWriter = new FileWriter(filePlanning);
              JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
             jsonWriter.setIndent("    ");
@@ -259,7 +283,7 @@ public class Model {
         return true;
     }
 
-    public void writeTodoArray(JsonWriter jsonWriter, List<String> listTodo) throws IOException {
+    private void writeTodoArray(JsonWriter jsonWriter, List<String> listTodo) throws IOException {
         jsonWriter.name("todo");
         jsonWriter.beginArray();
 
@@ -270,7 +294,7 @@ public class Model {
         jsonWriter.endArray();
     }
 
-    public void writePlanArray(JsonWriter jsonWriter, List<String> listPlan) throws IOException {
+    private void writePlanArray(JsonWriter jsonWriter, List<String> listPlan) throws IOException {
         jsonWriter.name("plan");
         jsonWriter.beginArray();
 
@@ -281,13 +305,13 @@ public class Model {
         jsonWriter.endArray();
     }
 
-    public void writeDate(JsonWriter jsonWriter, Date date) {
+    private void writeDate(JsonWriter jsonWriter, Date date) {
 
     }
 
 
     //alle Listen und Datum einlesen in die zugehörigen Propertys
-    public boolean readPlanningJson(File filePlanning) {
+    private boolean readPlanningJson(File filePlanning) {
         try (FileReader fileReader = new FileReader(filePlanning);
              JsonReader jsonReader = new JsonReader(fileReader)) {
             jsonReader.beginObject();
