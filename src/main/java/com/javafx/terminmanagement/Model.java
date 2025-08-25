@@ -57,9 +57,50 @@ public class Model {
                 Platform.exit();
             }
         }
-        //TODO Dateien für Dateiarbeit erstellen, falls noch nicht vorhanden
-        //TODO Fähigkeit zum Schreiben und Lesen testen
 
+        //Dateien für Dateiarbeit erstellen, falls noch nicht vorhanden
+        //falls dies nicht möglich ist, wird das Programm beendet
+        if (!fileTasks.exists()) {
+            try {
+                if (fileTasks.createNewFile()) {
+                    System.out.println(fileTasks.toString() + " wurde erstellt.");
+                } else {
+                    System.err.println(fileTasks.toString() + " konnte nicht erstellt werden und Programm wird beendet!");
+                    Platform.exit();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        if (!filePlanning.exists()) {
+            try {
+                if (filePlanning.createNewFile()) {
+                    System.out.println(filePlanning.toString() + " wurde erstellt.");
+                } else {
+                    System.err.println(filePlanning.toString() + " konnte nicht erstellt werden und Programm wird beendet!");
+                    Platform.exit();
+                }
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+        //Fähigkeit zum Schreiben und Lesen der Datendateien testen
+        if (!fileTasks.canRead()) {
+            System.err.println(fileTasks + " kann nicht gelesen werden, weshalb das Programm beendet wird!");
+            Platform.exit();
+        }
+        if (!fileTasks.canWrite()) {
+            System.err.println(fileTasks + " kann nicht geschrieben werden, weshalb das Programm beendet wird!");
+            Platform.exit();
+        }
+        if (!filePlanning.canRead()) {
+            System.err.println(filePlanning + " kann nicht gelesen werden, weshalb das Programm beendet wird!");
+            Platform.exit();
+        }
+        if (!filePlanning.canWrite()) {
+            System.err.println(filePlanning + " kann nicht geschrieben werden, weshalb das Programm beendet wird!");
+            Platform.exit();
+        }
 
         //Einlesen der Aufgabenliste bei Programmstart
         //TODO: Verhalten bei Fehler verbessern, sodass Nutzer diese sieht ohne Commandline
@@ -68,10 +109,8 @@ public class Model {
             taskListAllProperty().addAll(readTasksJson(fileTasks));
 
             //Stringliste für Tagesplan und noch zu machende Aufgaben mit Werten füllen
-            //aber nur wenn die Datei nicht leer ist
-            if (filePlanning.length() != 0) {
-                readPlanningJson(filePlanning);
-            }
+            readPlanningJson(filePlanning);
+
             //noch zu machende Aufgaben mit vollständiger Taskliste abgleichen
             //TODO: mit sortierter Liste könnte eine sehr viel elegantere Lösung gefunden werden
             //TODO: String löschen, wenn keine dazupassende Aufgabe gefunden wird
@@ -312,6 +351,7 @@ public class Model {
 
     //alle Listen und Datum einlesen in die zugehörigen Propertys
     private boolean readPlanningJson(File filePlanning) {
+        if (filePlanning.length() == 0) return true;
         try (FileReader fileReader = new FileReader(filePlanning);
              JsonReader jsonReader = new JsonReader(fileReader)) {
             jsonReader.beginObject();
@@ -417,6 +457,7 @@ public class Model {
      * @throws IOException
      */
     public ArrayList<Task> readTasksJson(File fileTasks) throws IOException {
+        if (fileTasks.length() == 0) return new ArrayList<Task>();
         try (FileReader fileReader = new FileReader(fileTasks);
              JsonReader jsonReader = new JsonReader(fileReader)) {
             return readTasksArray(jsonReader);
