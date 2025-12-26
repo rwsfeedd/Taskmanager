@@ -20,74 +20,78 @@
             fx:controller="com.javafx.terminmanagement.Controllers.MainWindowController">
     <TabPane fx:id="tabPane" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
              AnchorPane.bottomAnchor="0">
-        <Tab fx:id="previousTab" text="Vergangenheit" closable="false"></Tab>
-            <Tab fx:id="dailyTab" text="Tagesliste" closable="false">
-                <BorderPane>
-                    <center>
-                        <ListView fx:id="dailyList"/>
-                    </center>
-                    <right>
-                        <VBox>
-                            <Button fx:id="signOutButton" text="Aufgabe austragen"
-                                    onAction="#onTaskSignOutButtonClick"/>
-                            <Button fx:id="taskDoneButton" text="Aufgabe fertigstellen"
-                                    onAction="#onTaskDoneButtonClick"/>
-                        </VBox>
-                    </right>
-                </BorderPane>
-            </Tab>
-        <Tab fx:id="nextTab" text="Zukunft" closable="false"></Tab>
-            <Tab fx:id="allTasksTab" text="Aufgabenliste" closable="false">
-                <BorderPane>
-                    <center>
-                        <ListView fx:id="allList"/>
-                    </center>
-                    <right>
-                        <VBox>
-                            <Button fx:id="taskCreateButton" text="Aufgabe erstellen"
-                                    onAction="#onTaskCreateButtonClick"/>
-                            <Button fx:id="taskChangeButton" text="Aufgabe bearbeiten"
-                                    onAction="#onTaskChangeButtonClick"/>
-                            <Button fx:id="taskDeleteButton" text="Aufgabe löschen"
-                                    onAction="#onTaskDeleteButtonClick"/>
-                            <Button fx:id="signInButton" text="Aufgabe eintragen" onAction="#onTaskSignInButtonClick"/>
-                        </VBox>
-                    </right>
-                </BorderPane>
-            </Tab>
-            <Tab fx:id="createTaskTab" text="erstellen" closable="false">
-                <BorderPane>
-                    <center>
-                        <VBox>
-                            <!-- Eingabe Name -->
-                            <Label text="Name"/>
-                            <TextField fx:id="textFieldName" promptText="Name der Aufgabe"/>
-                            <!-- Eingabe Wiederholung -->
-                            <Label text="Wiederholung aller x Tage, wobei bei 0 keine Wiederholung auftritt"/>
-                            <TextField fx:id="textFieldRepeat" promptText="Eingabe von x Tagen"/>
-                            <!-- Eingabe Rollover -->
-                            <Label text="Rollover zu nächstem Tag"/>
-                            <HBox>
-                                <fx:define>
-                                    <ToggleGroup fx:id="groupButtonsRollover"/>
-                                </fx:define>
-                                <!--2 ToggleButtons für Rollover-->
-                                <RadioButton fx:id="buttonSetRollover" text="aktiviert"
-                                             toggleGroup="$groupButtonsRollover"/>
-                                <RadioButton text="deaktiviert"
-                                             toggleGroup="$groupButtonsRollover"
-                                             selected="true"
-                                />
-                            </HBox>
-                        </VBox>
-                    </center>
-                    <right>
-                        <Button fx:id="taskSaveButton" text="Speichern" onAction="#onSaveButtonClick"/>
-                    </right>
-                    <bottom>
-                        <Label fx:id="validationLabel" textFill="red"/>
-                    </bottom>
-                </BorderPane>
-            </Tab>
-        </TabPane>
+        <Tab fx:id="previousTab" text="Vergangenheit" closable="false">
+            <ListView fx:id="historyList"/>
+        </Tab>
+        <Tab fx:id="dailyTab" text="Tagesliste" closable="false">
+            <BorderPane>
+                <center>
+                    <ListView fx:id="dailyList"/>
+                </center>
+                <right>
+                    <VBox>
+                        <Button fx:id="signOutButton" text="Aufgabe austragen"
+                                onAction="#onTaskSignOutButtonClick"/>
+                        <Button fx:id="taskDoneButton" text="Aufgabe fertigstellen"
+                                onAction="#onTaskDoneButtonClick"/>
+                    </VBox>
+                </right>
+            </BorderPane>
+        </Tab>
+        <Tab fx:id="nextTab" text="Zukunft" closable="false">
+
+        </Tab>
+        <Tab fx:id="allTasksTab" text="Aufgabenliste" closable="false">
+            <BorderPane>
+                <center>
+                    <ListView fx:id="allList"/>
+                </center>
+                <right>
+                    <VBox>
+                        <Button fx:id="taskCreateButton" text="Aufgabe erstellen"
+                                onAction="#onTaskCreateButtonClick"/>
+                        <Button fx:id="taskChangeButton" text="Aufgabe bearbeiten"
+                                onAction="#onTaskChangeButtonClick"/>
+                        <Button fx:id="taskDeleteButton" text="Aufgabe löschen"
+                                onAction="#onTaskDeleteButtonClick"/>
+                        <Button fx:id="signInButton" text="Aufgabe eintragen" onAction="#onTaskSignInButtonClick"/>
+                    </VBox>
+                </right>
+            </BorderPane>
+        </Tab>
+        <Tab fx:id="createTaskTab" text="erstellen" closable="false">
+            <BorderPane>
+                <center>
+                    <VBox>
+                        <!-- Eingabe Name -->
+                        <Label text="Name"/>
+                        <TextField fx:id="textFieldName" promptText="Name der Aufgabe"/>
+                        <!-- Eingabe Wiederholung -->
+                        <Label text="Wiederholung aller x Tage, wobei bei 0 keine Wiederholung auftritt"/>
+                        <TextField fx:id="textFieldRepeat" promptText="Eingabe von x Tagen"/>
+                        <!-- Eingabe Rollover -->
+                        <Label text="Rollover zu nächstem Tag"/>
+                        <HBox>
+                            <fx:define>
+                                <ToggleGroup fx:id="groupButtonsRollover"/>
+                            </fx:define>
+                            <!--2 ToggleButtons für Rollover-->
+                            <RadioButton fx:id="buttonSetRollover" text="aktiviert"
+                                         toggleGroup="$groupButtonsRollover"/>
+                            <RadioButton text="deaktiviert"
+                                         toggleGroup="$groupButtonsRollover"
+                                         selected="true"
+                            />
+                        </HBox>
+                    </VBox>
+                </center>
+                <right>
+                    <Button fx:id="taskSaveButton" text="Speichern" onAction="#onSaveButtonClick"/>
+                </right>
+                <bottom>
+                    <Label fx:id="validationLabel" textFill="red"/>
+                </bottom>
+            </BorderPane>
+        </Tab>
+    </TabPane>
 </AnchorPane>

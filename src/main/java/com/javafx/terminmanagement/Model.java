@@ -53,6 +53,7 @@ public class Model {
     //Property für MainWindowView
     private final SimpleListProperty<String> stringListTodoProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
     private final SimpleListProperty<Task> taskListAllProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
+    private final SimpleListProperty<String> stringListHistoryProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     //Propertys für TaskCreationWindowView
     private final SimpleStringProperty newTaskNameProperty = new SimpleStringProperty("");
@@ -575,28 +576,17 @@ public class Model {
         return true;
     }
 
-
-    /*
-    public boolean writeNewTodoString()
-    public boolean writeDeleteTodoString()
-    writeNewPlanString()
-    writeDeletePlanString()
-     */
-
     private boolean writePlanningJson(File filePlanning, LocalDate planDate, List<String> listPlan, List<String> listTodo) {
         try (FileWriter fileWriter = new FileWriter(filePlanning);
-             JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
-            jsonWriter.setIndent("    ");
-            jsonWriter.beginObject();
+             JsonWriter gsonWriter = new JsonWriter(fileWriter)) {
+            JSONWriter jsonWriter = new JSONWriter(gsonWriter);
 
-            writeDate(jsonWriter, planDate);
-            writePlanArray(jsonWriter, listPlan);
-            writeTodoArray(jsonWriter, listTodo);
-
-            jsonWriter.endObject();
+            writeDate(gsonWriter, planDate); //TODO
+            jsonWriter.writeStringArray("plan", listPlan);
+            jsonWriter.writeStringArray("todo", listPlan);
 
             //Alle gepufferten Daten fertig schreiben
-            jsonWriter.flush();
+            gsonWriter.flush();
             fileWriter.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -605,19 +595,9 @@ public class Model {
         return true;
     }
 
-    private void writeTodoArray(JsonWriter jsonWriter, List<String> listTodo) throws IOException {
-        jsonWriter.name("todo");
-        jsonWriter.beginArray();
-
-        for (String stringTodo : listTodo) {
-            jsonWriter.value(stringTodo);
-        }
-
-        jsonWriter.endArray();
-    }
-
-    private void writePlanArray(JsonWriter jsonWriter, List<String> listPlan) throws IOException {
-        jsonWriter.name("plan");
+    /*
+    private void writeHistoryArray(JsonWriter jsonWriter, List<String> listPlan) throws IOException {
+        jsonWriter.name("history");
         jsonWriter.beginArray();
 
         for (String stringPlan : listPlan) {
@@ -626,6 +606,7 @@ public class Model {
 
         jsonWriter.endArray();
     }
+     */
 
     private void writeDate(JsonWriter jsonWriter, LocalDate date) throws IOException {
         jsonWriter.name("planDate");
@@ -849,6 +830,10 @@ public class Model {
 
     public SimpleListProperty<String> stringListTodoProperty() {
         return stringListTodoProperty;
+    }
+
+    public SimpleListProperty<String> stringListHistoryProperty() {
+        return stringListHistoryProperty;
     }
 
     public SimpleListProperty<Task> taskListAllProperty() {

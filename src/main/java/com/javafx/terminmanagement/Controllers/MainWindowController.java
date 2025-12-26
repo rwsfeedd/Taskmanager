@@ -25,6 +25,10 @@ public class MainWindowController {
     private ListView<String> dailyList;
     @FXML
     private ListView<Task> allList;
+    @FXML
+    private ListView<String> historyList;
+
+
 
     @FXML
     private TextField textFieldName;
@@ -91,6 +95,8 @@ public class MainWindowController {
         model.newTaskRolloverProperty().bindBidirectional(buttonSetRollover.selectedProperty());
         //Binding für Label um Nutzer invalide Aufgabe zu zeigen
         validationLabel.textProperty().bind(model.newTaskValidationProperty());
+
+        historyList.itemsProperty().bind(model.stringListHistoryProperty());
     }
 
     /**

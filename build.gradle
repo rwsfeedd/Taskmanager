@@ -44,6 +44,13 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 
+    //JavaFX Testing framework
+    testImplementation "org.testfx:testfx-core:4.0.18"
+    //add TestingFramework Dependencys for TestFX
+    testImplementation ("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testImplementation "org.testfx:testfx-junit5:4.0.18"
+    testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '2.1'
+
     //Gson import für Java Serialisation and Deserialisierung mit Json
     implementation 'com.google.code.gson:gson:2.13.1'
 }
