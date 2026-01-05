@@ -30,9 +30,9 @@
                 </center>
                 <right>
                     <VBox>
-                        <Button fx:id="signOutButton" text="Aufgabe austragen"
+                        <Button text="Aufgabe austragen"
                                 onAction="#onTaskSignOutButtonClick"/>
-                        <Button fx:id="taskDoneButton" text="Aufgabe fertigstellen"
+                        <Button text="Aufgabe fertigstellen"
                                 onAction="#onTaskDoneButtonClick"/>
                     </VBox>
                 </right>
@@ -48,13 +48,13 @@
                 </center>
                 <right>
                     <VBox>
-                        <Button fx:id="taskCreateButton" text="Aufgabe erstellen"
+                        <Button text="Aufgabe erstellen"
                                 onAction="#onTaskCreateButtonClick"/>
-                        <Button fx:id="taskChangeButton" text="Aufgabe bearbeiten"
+                        <Button text="Aufgabe bearbeiten"
                                 onAction="#onTaskChangeButtonClick"/>
-                        <Button fx:id="taskDeleteButton" text="Aufgabe löschen"
+                        <Button text="Aufgabe löschen"
                                 onAction="#onTaskDeleteButtonClick"/>
-                        <Button fx:id="signInButton" text="Aufgabe eintragen" onAction="#onTaskSignInButtonClick"/>
+                        <Button text="Aufgabe eintragen" onAction="#onTaskSignInButtonClick"/>
                     </VBox>
                 </right>
             </BorderPane>
@@ -68,28 +68,62 @@
                         <TextField fx:id="textFieldName" promptText="Name der Aufgabe"/>
                         <!-- Eingabe Wiederholung -->
                         <Label text="Wiederholung aller x Tage, wobei bei 0 keine Wiederholung auftritt"/>
-                        <TextField fx:id="textFieldRepeat" promptText="Eingabe von x Tagen"/>
+                        <TextField fx:id="textFieldCreateRepeat" promptText="Eingabe von x Tagen"/>
                         <!-- Eingabe Rollover -->
                         <Label text="Rollover zu nächstem Tag"/>
                         <HBox>
                             <fx:define>
-                                <ToggleGroup fx:id="groupButtonsRollover"/>
+                                <ToggleGroup fx:id="groupButtonsCreateRollover"/>
                             </fx:define>
                             <!--2 ToggleButtons für Rollover-->
-                            <RadioButton fx:id="buttonSetRollover" text="aktiviert"
-                                         toggleGroup="$groupButtonsRollover"/>
+                            <RadioButton fx:id="buttonSetCreateRollover" text="aktiviert"
+                                         toggleGroup="$groupButtonsCreateRollover"/>
                             <RadioButton text="deaktiviert"
-                                         toggleGroup="$groupButtonsRollover"
+                                         toggleGroup="$groupButtonsCreateRollover"
                                          selected="true"
                             />
                         </HBox>
                     </VBox>
                 </center>
                 <right>
-                    <Button fx:id="taskSaveButton" text="Speichern" onAction="#onSaveButtonClick"/>
+                    <Button text="Speichern" onAction="#onSaveButtonClick"/>
                 </right>
                 <bottom>
-                    <Label fx:id="validationLabel" textFill="red"/>
+                    <Label fx:id="validationCreateLabel" textFill="red"/>
+                </bottom>
+            </BorderPane>
+        </Tab>
+        <Tab fx:id="changeTaskTab" text="ändern" closable="false">
+            <BorderPane>
+                <center>
+                    <VBox>
+                        <!-- Anzeige Name -->
+                        <Label text="Name"/>
+                        <Label fx:id="labelName" textFill="gray"/>
+                        <!-- Eingabe Wiederholung -->
+                        <Label text="Wiederholung aller x Tage, wobei bei 0 keine Wiederholung auftritt"/>
+                        <TextField fx:id="textFieldChangeRepeat"/>
+                        <!-- Eingabe Rollover -->
+                        <Label text="Rollover zu nächstem Tag"/>
+                        <HBox>
+                            <fx:define>
+                                <ToggleGroup fx:id="groupButtonsChangeRollover"/>
+                            </fx:define>
+                            <!--2 ToggleButtons für Rollover-->
+                            <RadioButton fx:id="buttonSetChangeRolloverOn"
+                                         text="aktiviert"
+                                         toggleGroup="$groupButtonsChangeRollover"/>
+                            <RadioButton fx:id="buttonSetChangeRolloverOff"
+                                         text="deaktiviert"
+                                         toggleGroup="$groupButtonsChangeRollover"/>
+                        </HBox>
+                    </VBox>
+                </center>
+                <right>
+                    <Button text="Speichern" onAction="#onSaveButtonClick"/>
+                </right>
+                <bottom>
+                    <Label fx:id="validationChangeLabel" textFill="red"/>
                 </bottom>
             </BorderPane>
         </Tab>

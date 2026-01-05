@@ -52,7 +52,7 @@ public class Model {
     private final SimpleListProperty<Task> taskListAllProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
     private final SimpleListProperty<String> stringListHistoryProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
 
-    //Propertys für TaskCreationWindowView
+    //Propertys for TaskCreationTab and TaskChangeTab
     private final SimpleStringProperty newTaskNameProperty = new SimpleStringProperty("");
     private final SimpleStringProperty newTaskRepeatProperty = new SimpleStringProperty("0");
     private final SimpleBooleanProperty newTaskRolloverProperty = new SimpleBooleanProperty(false);
@@ -338,6 +338,8 @@ public class Model {
     public boolean writeChangedTask() {
         //Validierung der Eingabeparameter
         StringBuilder stringInvalid = new StringBuilder();
+        //Validation if Task is selected
+        if (newTaskNameProperty.getValue().isEmpty()) stringInvalid.append("Keine Aufgabe ausgewählt! \n");
         //Validierung Aufgabenwiederholung
         int repeat = 0;
         if (newTaskRepeatProperty().getValue().isEmpty()) {//Test ob in Wiederholung etwas geschrieben wurde

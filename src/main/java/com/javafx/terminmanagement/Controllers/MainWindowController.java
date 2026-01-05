@@ -28,14 +28,27 @@ public class MainWindowController {
     @FXML
     private ListView<String> historyList;
 
+    //createTab
     @FXML
     private TextField textFieldName;
     @FXML
-    private TextField textFieldRepeat;
+    private TextField textFieldCreateRepeat;
     @FXML
-    private RadioButton buttonSetRollover;
+    private RadioButton buttonSetCreateRollover;
     @FXML
-    private Label validationLabel;
+    private Label validationCreateLabel;
+
+    //changeTab
+    @FXML
+    private Label labelName;
+    @FXML
+    private TextField textFieldChangeRepeat;
+    @FXML
+    private RadioButton buttonSetChangeRolloverOn;
+    @FXML
+    private RadioButton buttonSetChangeRolloverOff;
+    @FXML
+    private Label validationChangeLabel;
 
     @FXML
     private TabPane tabPane;
@@ -49,6 +62,8 @@ public class MainWindowController {
     private Tab allTasksTab;
     @FXML
     private Tab createTaskTab;
+    @FXML
+    private Tab changeTaskTab;
 
     Model model;
 
@@ -57,6 +72,8 @@ public class MainWindowController {
      */
     public void initialize() {
         model = Model.getInstance();
+
+        tabPane.getSelectionModel().select(dailyTab);
 
         allList.itemsProperty().bind(model.taskListAllProperty());
         model.selectedTaskProperty().bind(allList.selectionModelProperty().getValue().selectedItemProperty());
@@ -68,14 +85,17 @@ public class MainWindowController {
         //Validierungslabel bereinigen
         model.setNewTaskValidationProperty("");
 
-        //Binding von Aufgabenname
+        //Bindings for createTaskTab
         model.newTaskNameProperty().bindBidirectional(textFieldName.textProperty());
-        //Binding von Aufgabenwiederholung
-        model.newTaskRepeatProperty().bindBidirectional(textFieldRepeat.textProperty());
-        //Binding von Aufgabenrollover
-        model.newTaskRolloverProperty().bindBidirectional(buttonSetRollover.selectedProperty());
-        //Binding für Label um Nutzer invalide Aufgabe zu zeigen
-        validationLabel.textProperty().bind(model.newTaskValidationProperty());
+        model.newTaskRepeatProperty().bindBidirectional(textFieldCreateRepeat.textProperty());
+        model.newTaskRolloverProperty().bindBidirectional(buttonSetCreateRollover.selectedProperty());
+        validationCreateLabel.textProperty().bind(model.newTaskValidationProperty());
+
+        //Bindings for changeTaskTab
+        labelName.textProperty().bind(model.newTaskNameProperty());
+        model.newTaskRepeatProperty().bindBidirectional(textFieldChangeRepeat.textProperty());
+        model.newTaskRolloverProperty().bindBidirectional(buttonSetChangeRolloverOn.selectedProperty());
+        validationChangeLabel.textProperty().bind(model.newTaskValidationProperty());
 
         historyList.itemsProperty().bind(model.stringListHistoryProperty());
     }
@@ -133,18 +153,8 @@ public class MainWindowController {
         if (model.selectedTaskProperty().getValue() == null) {
             return;
         }
-        try {
-            //Die Objekthierarchie aus dem zugehörigen XML Dokument laden
-            FXMLLoader fxmlLoader = new FXMLLoader(StartApplication.class.getResource("taskChangeView.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), 640, 480);
 
-            //Stage initialisieren und darstellen
-            stage.setTitle("Terminmanagement");
-            stage.setScene(scene);
-            stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        tabPane.getSelectionModel().select(changeTaskTab);
     }
 
     @FXML
@@ -173,8 +183,11 @@ public class MainWindowController {
     @FXML
     public void onSaveButtonClick() {
         Model model = Model.getInstance();
-        if (model.writeNewTask()) {
-            tabPane.getSelectionModel().select(allTasksTab);
+        if (createTaskTab.isSelected()) {
+            if (model.writeNewTask()) tabPane.getSelectionModel().select(allTasksTab);
+        } else {
+            if (model.writeChangedTask()) tabPane.getSelectionModel().select(allTasksTab);
         }
+
     }
 }
