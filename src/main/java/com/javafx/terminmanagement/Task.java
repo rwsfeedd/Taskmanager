@@ -24,8 +24,9 @@ public class Task implements Serializable {
      * @param repeat Wiederholung der Aufgabe aller repeat Tage
      * @param rollover Aufgabe wird bei Tageswechsel, wenn sie nicht fertiggestellt wurde, in den Plan geschrieben
      */
-    public Task(int id, String name, int repeat, boolean rollover) {
-        this.id = id;
+    public Task(String name, int repeat, boolean rollover) {
+        Model.incLastId();
+        this.id = Model.getLastId();
         this.name = name;
         this.repeat = repeat;
         this.rollover = rollover;
@@ -83,6 +84,10 @@ public class Task implements Serializable {
             stringRet.append(dateLastDone.format(DateTimeFormatter.ISO_LOCAL_DATE));
         }
         return stringRet.toString();
+    }
+
+    public int getId() {
+        return id;
     }
 
     /**

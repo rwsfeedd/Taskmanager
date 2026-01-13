@@ -1,25 +1,10 @@
 package com.javafx.terminmanagement.Controllers;
 
 import com.javafx.terminmanagement.Model;
-import com.javafx.terminmanagement.StartApplication;
 import com.javafx.terminmanagement.Task;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleListProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
-import javafx.event.Event;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainWindowController {
     @FXML
@@ -76,10 +61,10 @@ public class MainWindowController {
 
         tabPane.getSelectionModel().select(dailyTab);
 
-        allList.itemsProperty().bind(model.taskListAllProperty());
+        allList.itemsProperty().bind(model.taskListProperty());
         model.selectedTaskProperty().bind(allList.selectionModelProperty().getValue().selectedItemProperty());
 
-        dailyList.itemsProperty().bind(model.stringListPlanProperty());
+        //dailyList.itemsProperty().bind(model.stringListPlanProperty());
         model.selectedStringProperty().bind(dailyList.selectionModelProperty().getValue().selectedItemProperty());
 
 
@@ -98,7 +83,7 @@ public class MainWindowController {
         model.newTaskRolloverProperty().bindBidirectional(buttonSetChangeRolloverOn.selectedProperty());
         validationChangeLabel.textProperty().bind(model.newTaskValidationProperty());
 
-        historyList.itemsProperty().bind(model.stringListHistoryProperty());
+        //historyList.itemsProperty().bind(model.stringListHistoryProperty());
     }
 
     /**
@@ -108,9 +93,11 @@ public class MainWindowController {
     public void onTaskSignOutButtonClick() {
         Model model = Model.getInstance();
         //System.out.println(model.selectedStringProperty().getValue());
+        /*
         if (!model.writeSignOutTask()) {
             System.err.println("Aufgabe konnte nicht ausgetragen werden!");
         }
+         */
 
     }
 
@@ -120,9 +107,12 @@ public class MainWindowController {
     @FXML
     public void onTaskDoneButtonClick() {
         Model model = Model.getInstance();
+        /*
         if (!model.writeDoneTask()) {
             System.err.println("Aufgabe konnte nicht fertiggestellt werden!");
         }
+         */
+
     }
 
     /**
@@ -173,9 +163,11 @@ public class MainWindowController {
     @FXML
     public void onTaskSignInButtonClick() {
         Model model = Model.getInstance();
+        /*
         if (!model.writeSignInTask()) {
             System.out.println("Fehler beim Eintragen der Aufgabe in den Aufgabenplan");
         }
+         */
     }
 
     /**
