@@ -16,6 +16,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.control.TableView?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.javafx.terminmanagement.Controllers.MainWindowController">
     <TabPane fx:id="tabPane" AnchorPane.leftAnchor="0" AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
@@ -26,7 +27,7 @@
         <Tab fx:id="dailyTab" text="Tagesliste" closable="false">
             <BorderPane>
                 <center>
-                    <ListView fx:id="dailyList"/>
+                    <TableView fx:id="dailyTableView"/>
                 </center>
                 <right>
                     <VBox>
@@ -44,7 +45,7 @@
         <Tab fx:id="allTasksTab" text="Aufgabenliste" closable="false">
             <BorderPane>
                 <center>
-                    <ListView fx:id="allList"/>
+                    <TableView fx:id="allTableView"/>
                 </center>
                 <right>
                     <VBox>

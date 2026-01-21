@@ -2,10 +2,12 @@ package com.javafx.terminmanagement.Controllers;
 
 import com.javafx.terminmanagement.Model;
 import com.javafx.terminmanagement.Task;
+import javafx.beans.value.ObservableListValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class MainWindowController {
@@ -15,7 +17,10 @@ public class MainWindowController {
 
     //List for allTasksTab
     @FXML
-    private ListView<Task> allList;
+    private TableView<Task> allTableView;
+
+    @FXML
+    private TableView<Task> dailyTableView;
 
     @FXML
     private ListView<String> historyList;
@@ -66,12 +71,25 @@ public class MainWindowController {
         model = Model.getInstance();
 
         tabPane.getSelectionModel().select(dailyTab);
-        allList.itemsProperty().bind(model.taskListProperty());
+
+        allTableView.setItems(model.taskListProperty());
+
+        TableColumn<Task, Integer> columnId = new TableColumn<>("Id");
+        columnId.setCellValueFactory(new PropertyValueFactory<>("idProp"));
+        TableColumn<Task, String> columnName = new TableColumn<>("Name");
+        columnId.setCellValueFactory(new PropertyValueFactory<>("nameProp"));
+        allTableView.getColumns().addAll(columnId, columnName);
+        //allTableView.getColumns().get(0).tableViewProperty().get().itemsProperty().bind(model.taskListProperty());
+        //allTableView.getColumns().get(1).tableViewProperty().get().itemsProperty().bind(model.taskListProperty());
+        //allMap.itemsProperty();
+
+
+
         //model.taskListProperty().bind(model.taskListProperty());
-        model.selectedTaskProperty().bind(allList.selectionModelProperty().getValue().selectedItemProperty());
+        model.selectedTaskProperty().bind(allTableView.selectionModelProperty().getValue().selectedItemProperty());
 
         //dailyList.itemsProperty().bind(model.stringListPlanProperty());
-        model.selectedStringProperty().bind(dailyList.selectionModelProperty().getValue().selectedItemProperty());
+        //model.selectedStringProperty().bind(dailyTableView.selectionModelProperty().getValue().selectedItemProperty());
 
 
         //Validierungslabel bereinigen

@@ -1,5 +1,8 @@
 package com.javafx.terminmanagement;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.StringProperty;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -9,7 +12,9 @@ import java.util.Date;
 public class Task implements Serializable {
     //Attribute, die bei Erstellung beeinflusst werden
     private int id;
+    public IntegerProperty idProp;
     private String name;
+    public StringProperty nameProp;
     private int repeat; // 0->keine Wiederholung; 1->jeden Tag; 2->aller 2 Tage
     //private int nRepeat; // 0->keine Wiederholung; 1->1mal Wiederholen; 2->2mal Wiederholen //dayRepeat und nRepeat zusammenarbeit bei Tageswechsel?
     private boolean rollover; // in nächsten Tag tun, wenn nicht gemacht
@@ -27,7 +32,9 @@ public class Task implements Serializable {
     public Task(String name, int repeat, boolean rollover) {
         Model.incLastId();
         this.id = Model.getLastId();
+        idProp.set(id);
         this.name = name;
+        nameProp.set(this.name);
         this.repeat = repeat;
         this.rollover = rollover;
 
