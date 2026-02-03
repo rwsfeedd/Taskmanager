@@ -66,24 +66,23 @@ public class Model {
         Model.stage = stage;
         instance = this;
 
-        //Ordner für Dateiarbeit erstellen, falls noch nicht vorhanden
+        //Check for existence of dataDir and handle nonexistence
         if (!dataDir.exists()) {
             if (dataDir.mkdir()) {
-                System.out.println("Data-Verzeichnis wurde erstellt!");
+                System.out.println("(INFO) Model() DataDir was newly created!");
             } else {
-                System.err.println("Model Initialisierung: Data-Verzeichnis existiert nicht und konnte auch nicht erstellt werden!");
+                System.err.println("(ERR) Model() DataDir nonexistent, can't be created and program is being shut down!");
                 Platform.exit();
             }
         }
 
-        //Dateien für Dateiarbeit erstellen, falls noch nicht vorhanden
-        //falls dies nicht möglich ist, wird das Programm beendet
+        //Check for existence of fileTasks and filePlanning and handle nonexistence
         if (!fileTasks.exists()) {
             try {
                 if (fileTasks.createNewFile()) {
-                    System.out.println(fileTasks.toString() + " wurde erstellt.");
+                    System.out.println("(INFO) Model() " + fileTasks.toString() + " was created");
                 } else {
-                    System.err.println(fileTasks.toString() + " konnte nicht erstellt werden und Programm wird beendet!");
+                    System.err.println("(ERR) Model()" + fileTasks.toString() + " couldn't be created and program is being shut down!");
                     Platform.exit();
                 }
             } catch (IOException ex) {
@@ -93,55 +92,70 @@ public class Model {
         if (!filePlanning.exists()) {
             try {
                 if (filePlanning.createNewFile()) {
-                    System.out.println(filePlanning.toString() + " wurde erstellt.");
+                    System.out.println("(INFO) Model() " + filePlanning.toString() + " was created");
                 } else {
-                    System.err.println(filePlanning.toString() + " konnte nicht erstellt werden und Programm wird beendet!");
+                    System.err.println("(ERR) Model()" + filePlanning.toString() + " couldn't be created and program is being shut down!");
                     Platform.exit();
                 }
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         }
-        //Fähigkeit zum Schreiben und Lesen der Datendateien testen
+
+        //Check Permission to read and write fileTasks and filePlanning
         if (!fileTasks.canRead()) {
-            System.err.println(fileTasks + " kann nicht gelesen werden, weshalb das Programm beendet wird!");
+            System.err.println("(ERR) Model() " + fileTasks.toString() + " can't be read, causing a shutdown of the program");
             Platform.exit();
         }
         if (!fileTasks.canWrite()) {
-            System.err.println(fileTasks + " kann nicht geschrieben werden, weshalb das Programm beendet wird!");
+            System.err.println("(ERR) Model() " + fileTasks.toString() + " can't be written to, causing a shutdown of the program");
             Platform.exit();
         }
         if (!filePlanning.canRead()) {
-            System.err.println(filePlanning + " kann nicht gelesen werden, weshalb das Programm beendet wird!");
+            System.err.println("(ERR) Model() " + filePlanning.toString() + " can't be read, causing a shutdown of the program");
             Platform.exit();
         }
         if (!filePlanning.canWrite()) {
-            System.err.println(filePlanning + " kann nicht geschrieben werden, weshalb das Programm beendet wird!");
+            System.err.println("(ERR) Model() " + filePlanning.toString() + " can't be written to, causing a shutdown of the program");
             Platform.exit();
         }
 
-        //Einlesen der Aufgabenliste und der Stringlisten bei Programmstart
+
         try {
-            //vollständige Taskliste mit Werten füllen
-            ArrayList<Task> oldList = readTasksJson(fileTasks);
+            ArrayList<Task> readList = readTasksJson(fileTasks);
             ArrayList<Task> newList = new ArrayList<>(taskListProperty().getValue());
 
-            for (Task task : oldList) {
+            //validate read Task IDs
+            for (int i = 0; i < readList.size(); i++) {
+                //check existence of id
                 int id = -1;
-                id = task.getId();
+                id = readList.get(i).getId();
                 if (id == -1) {
-                    System.out.println("Aufgabe: " + task.getName() + " hat keine id");
+                    System.err.println("(ERR) Model() Task: " + readList.get(i).getName() + " has no ID!");
                     continue;
                 }
-                for (int i = 0; i < oldList.size(); i++) {
-                    if (oldList.get(i).getId() == task.getId()) {
-                        System.out.println("Aufgabe: " + task.getName() + " konnte nicht in taskListProperty eingetragen werden, da die Id schon vorhanden ist!");
+
+                //check if id of task is unique and remove this task if id is not unique
+                boolean unique = true;
+                for (int j = (i + 1); j < readList.size(); j++) {
+                    if (readList.get(i).getId() == readList.get(j).getId()) {
+                        unique = false;
+                        System.err.println("(ERR) Model() Task: " + readList.get(i).getName()
+                                + " wasn't written into taskListProperty because of nonunique ID!");
                     }
                 }
-                newList.add(task);
+                if (unique) {
+                    newList.add(readList.get(i));
+                    System.out.println("(INFO) Model() added Task: " + readList.get(i).toString());
+                }
             }
             setTaskListProperty(FXCollections.observableList(newList));
 
+            //-------------------------------------
+            //
+            //CURRENT PROGRESS
+            //
+            //-------------------------------------
 
             //Stringliste für Tagesplan, noch zu machende Aufgaben und Datum mit Werten füllen
             readPlanningJson(filePlanning);
