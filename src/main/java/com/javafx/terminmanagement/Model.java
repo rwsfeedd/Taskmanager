@@ -159,9 +159,6 @@ public class Model {
             //
             //-------------------------------------
 
-            //Stringliste für Tagesplan, noch zu machende Aufgaben und Datum mit Werten füllen
-            readPlanningJson(filePlanning);
-
             //planDate mit aktuellem Datum initialisieren, falls dieses nicht in dem planningFile eingelesen wurde
             if (planDate == null) planDate = LocalDate.now();
 
