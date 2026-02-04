@@ -26,7 +26,7 @@ public class JSONWriter {
        //writePlanArray
     }
 
-    public void writeDate(String name, LocalDate date) throws IOException {
+    public void writeDate(LocalDate date) throws IOException {
         jsonWriter.name("planDate");
         jsonWriter.value(Model.dateFormat.format(date));
     }

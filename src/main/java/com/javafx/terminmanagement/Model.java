@@ -669,7 +669,7 @@ public class Model {
     }
      */
 
-
+    /*
     private boolean writePlanningJson(File filePlanning, LocalDate planDate, List<String> listPlan, List<String> listTodo) {
         try (FileWriter fileWriter = new FileWriter(filePlanning);
              JsonWriter gsonWriter = new JsonWriter(fileWriter)) {
@@ -690,6 +690,7 @@ public class Model {
 
         return true;
     }
+     */
 
     /*
     private void writeHistoryArray(JsonWriter jsonWriter, List<String> listPlan) throws IOException {
@@ -782,19 +783,27 @@ public class Model {
             if (!fileTasks.exists()) {
                 if (!fileTasks.createNewFile()) {
                     System.err.println("Model:writeTaskJson() Datenfile konnte nicht erstellt werden!");
-                    //TODO fehlerbehandlung
+                    //TODO Errorhandling
                 }
             }
 
             try (FileWriter fileWriter = new FileWriter(fileTasks);
-                JsonWriter jsonWriter = new JsonWriter(fileWriter)) {
-                jsonWriter.setIndent("    ");
+                 JsonWriter gsonWriter = new JsonWriter(fileWriter)) {
+                gsonWriter.setIndent("    ");
 
+                JSONWriter jsonWriter = new JSONWriter(gsonWriter);
 
-                //TODO anpassen an neues Format
+                gsonWriter.beginObject();
 
+                //TODO change to always print the right date
+                jsonWriter.writeDate(planDate);
 
-                writeTaskArray(jsonWriter, listTasks);
+                //TODO implement planned
+                jsonWriter.writeStringArray("planned", new ArrayList<>());
+
+                writeTaskArray(gsonWriter, listTasks);
+
+                gsonWriter.endObject();
 
                 //Alle Streams fertig schreiben
                 //jsonWriter.flush();
@@ -810,11 +819,14 @@ public class Model {
     }
 
     private void writeTaskArray(JsonWriter jsonWriter, List<Task> listTasks) throws IOException {
+
+        jsonWriter.name("tasks");
         jsonWriter.beginArray();
         for (Task task : listTasks) {
             writeTask(jsonWriter, task);
         }
         jsonWriter.endArray();
+
     }
 
     private void writeTask(JsonWriter jsonWriter, Task task) throws IOException {
