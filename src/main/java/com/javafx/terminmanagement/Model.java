@@ -163,42 +163,35 @@ public class Model {
             //
             //-------------------------------------
 
-            /*
+
             //Add planned Information from plannedIdList to tasks in taskList
-            boolean exists;
-            HashSet<String> stringRemove = new HashSet<>();
-            for (String stringTodo : stringListTodoProperty().getValue()) {
-                exists = false;
-                for (int i = 0; i < taskListAllProperty().getValue().size(); i++) {
-                    if (stringTodo.equals(taskListAllProperty().getValue().get(i).getName())) {
-                        taskListAllProperty().getValue().get(i).setTodo(true);
-                        exists = true;
+
+            //go through all strings in planningProperty
+            //-> set planning in taskattribute
+            //-> delete Tasks that only exist in planning but not in tasklist
+            //todo doppelte ids hier checken??
+            int index;
+            HashSet<Task> removeList = new HashSet<>();
+
+            for (Integer id : plannedIdListProperty().getValue()) {
+                index = -1;
+                for (int i = 0; i < taskListProperty().getValue().size(); i++) {
+                    if (id == taskListProperty().get(i).getId()) {
+                        taskListProperty().get(i).setPlanned(true);
+                        index = i;
                         break;
                     }
                 }
-                if (exists == false) {
-                    //Aufgabe ist nicht in taskList aber in todoarray in planning.json
-                    stringRemove.add(stringTodo);
-                    System.err.println("Aufgabe " + stringTodo + " aus Todo existiert nicht!");
-                }
-            }
-            for (String stringPlan : stringListPlanProperty().getValue()) {
-                exists = false;
-                for (int i = 0; i < taskListAllProperty().getValue().size(); i++) {
-                    if (stringPlan.equals(taskListAllProperty().getValue().get(i).getName())) {
-                        taskListAllProperty().getValue().get(i).setPlanned(true);
-                        exists = true;
-                        break;
-                    }
-                }
-                if (exists == false) {
+
+                if (index < 0) {
                     //Aufgabe ist nicht in taskList aber in planarray in planning.json
-                    stringRemove.add(stringPlan);
-                    System.err.println("Aufgabe " + stringPlan + " aus Aufgabenplan existiert nicht!");
+                    removeList.add(taskListProperty().get(index));
+                    System.err.println("Aufgabe mit id " + id + " aus planning existiert nicht!");
                 }
             }
+
             //Aufgaben die in planning.json existieren, aber keine dahinterliegende Aufgabe besitzen, löschen
-            if (!stringRemove.isEmpty()) {
+            if (!removeList.isEmpty()) {
                 ArrayList<String> planListNew = new ArrayList<>(stringListPlanProperty().getValue());
                 ArrayList<String> todoListNew = new ArrayList<>(stringListPlanProperty().getValue());
                 planListNew.removeAll(stringRemove);
