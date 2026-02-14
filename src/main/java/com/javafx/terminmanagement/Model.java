@@ -372,7 +372,7 @@ public class Model {
         return true;
     }
 
-    public void loadChangeTask() {
+    public void loadSelectedTask() {
         Task changeTask = selectedTaskProperty().getValue();
 
         System.out.println("(INFO) Model:loadChangeTask() loading values: " + changeTask.toString());
@@ -394,6 +394,20 @@ public class Model {
         StringBuilder stringInvalid = new StringBuilder();
         //Validation if Task is selected
         if (newTaskNameProperty().getValue().isEmpty()) stringInvalid.append("Keine Aufgabe ausgewählt! \n");
+        //Validation of the name
+        String name = newTaskNameProperty().getValue();
+        //Test, ob Aufgabenname leer ist
+        if (name.isEmpty()) {
+            stringInvalid.append("Aufgabenname ist leer! \n");
+        } else {
+            //Test, ob Aufgabenname einzigartig ist
+            for (Task task : taskListProperty()) {
+                if (name.equals(task.getName())) {
+                    stringInvalid.append("Aufgabenname ist schon vorhanden! \n");
+                    break;
+                }
+            }
+        }
         //Validation of Taskname TODO
         //if(newTaskNameProperty().getValue())
         //Validierung Aufgabenwiederholung
@@ -418,13 +432,12 @@ public class Model {
             return false;
         }
         //Wenn die Aufgabe nicht verändert wurde, muss auch nichts neu in die Dateien geschrieben werden
-        Task changedTask = new Task(selectedTaskProperty().get().getId(), selectedTaskProperty().getValue().getName(), repeat, newTaskRolloverProperty().get());
+        Task changedTask = new Task(selectedTaskProperty().get().getId(), name, repeat, newTaskRolloverProperty().getValue());
         if (selectedTaskProperty().getValue().getDateLastDone() != null)
             changedTask.setDateLastDone(selectedTaskProperty().getValue().getDateLastDone());
         if (selectedTaskProperty().getValue().equals(changedTask)) {
             return true;
         }
-
 
         //Bei Änderung der Aufgabenwiederholung, muss getestet werden ob sich etwas in der Todoliste oder der Planliste ändern
         if (selectedTaskProperty().getValue().getRepeat() != changedTask.getRepeat()) {//Wiederholung wurde geändert

@@ -168,7 +168,7 @@ public class MainWindowController {
             return;
         }
 
-        model.loadChangeTask();
+        model.loadSelectedTask();
 
         tabPane.getSelectionModel().select(changeTaskTab);
     }
