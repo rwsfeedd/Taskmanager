@@ -8,4 +8,4 @@ Unter build/distributions sind fertige Builds der Applikation für Windows entha
 ___
 Roadmap:
 ---
-komplette CRUD-Funktionalität wiederherstellen(funktioniert: Aufgaben erstellen und löschen, noch fehlend: Aufgaben bearbeiten, eintragen und austragen), History implementieren, Zukunftsaufgabenpläne implementieren
+komplette CRUD-Funktionalität wiederherstellen(funktioniert: Aufgaben erstellen und löschen, noch fehlend: Aufgaben bearbeiten, eintragen und austragen), TableView statt ListView implementieren, History implementieren, Zukunftsaufgabenpläne implementieren, SQLite als Datenbank
