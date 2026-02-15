@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class MainWindowController {
     //List for dailyTab
     @FXML
-    private ListView<String> dailyList;
+    private ListView<Task> dailyList;
 
     //List for allTasksTab
     @FXML
@@ -84,9 +84,7 @@ public class MainWindowController {
         //model.taskListProperty().bind(model.taskListProperty());
         model.selectedTaskProperty().bind(allList.selectionModelProperty().getValue().selectedItemProperty());
 
-        //dailyList.itemsProperty().bind(model.stringListPlanProperty());
-        model.selectedStringProperty().bind(dailyList.selectionModelProperty().getValue().selectedItemProperty());
-
+        dailyList.itemsProperty().bind(model.dailyListProperty());
 
         //Validierungslabel bereinigen
         model.setNewTaskValidationProperty("");

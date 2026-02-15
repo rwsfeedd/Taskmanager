@@ -49,6 +49,7 @@ public class Model {
     //private final SimpleMapProperty<Integer, Task> taskMapProperty = new SimpleMapProperty<>(FXCollections.observableHashMap());
     private final SimpleListProperty<Task> taskListProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
 
+    private final SimpleListProperty<Task> dailyListProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
 
     private final SimpleListProperty<Integer> plannedIdListProperty = new SimpleListProperty<>(FXCollections.observableArrayList());
     /*
@@ -168,6 +169,7 @@ public class Model {
                 for (int i = 0; i < taskListProperty().getValue().size(); i++) {
                     if (id == taskListProperty().get(i).getId()) {
                         taskListProperty().get(i).setPlanned(true);
+                        dailyListProperty().add(taskListProperty().get(i));
                         index = i;
                         break;
                     }
@@ -1014,6 +1016,10 @@ public class Model {
         return taskListProperty;
     }
 
+    public SimpleListProperty<Task> dailyListProperty() {
+        return dailyListProperty;
+    }
+
     public SimpleListProperty<Integer> plannedIdListProperty() {
         return plannedIdListProperty;
     }
@@ -1021,6 +1027,11 @@ public class Model {
     public void setTaskListProperty(Collection<Task> newList) {
         taskListProperty.setAll(newList);
         System.out.println("Model:setTaskListProperty(Collection<Task> newList" + taskListProperty().get().toString() + ")");
+    }
+
+    public void setDailyListProperty(Collection<Task> newList) {
+        dailyListProperty.setAll(newList);
+        System.out.println("Model:setDailyListProperty(Collection<Task> newList" + dailyListProperty().get().toString() + ")");
     }
 
     public void setPlannedIdListProperty(Collection<Integer> newList) {
