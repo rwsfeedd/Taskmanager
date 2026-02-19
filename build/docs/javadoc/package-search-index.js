@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"Alle Packages","u":"allpackages-index.html"},{"m":"com.javafx.terminmanagement","l":"com.javafx.terminmanagement"},{"m":"com.javafx.terminmanagement","l":"com.javafx.terminmanagement.Controllers"}];updateSearchResults();

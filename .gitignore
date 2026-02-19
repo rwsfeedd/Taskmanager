@@ -1,5 +1,10 @@
 .gradle
-build/
+/build/classes/
+/build/generated/
+/build/libs/
+/build/resources/
+/build/scripts/
+/build/tmp/
 !gradle/wrapper/gradle-wrapper.jar
 
 
@@ -40,3 +45,4 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
