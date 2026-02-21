@@ -105,37 +105,6 @@ public class MainWindowController {
     }
 
     /**
-     * Knopf um ausgewählte Aufgabe aus Tagesplan auszutragen
-     */
-    @FXML
-    public void onTaskSignOutButtonClick() {
-        System.out.println("MainWindowController:onTaskSignOutButtonClick() -> button pressed");
-        Model model = Model.getInstance();
-        //System.out.println(model.selectedStringProperty().getValue());
-        /*
-        if (!model.writeSignOutTask()) {
-            System.err.println("Aufgabe konnte nicht ausgetragen werden!");
-        }
-         */
-
-    }
-
-    /**
-     * Knopf um ausgewählte Aufgabe als abgearbeitet zu speichern
-     */
-    @FXML
-    public void onTaskDoneButtonClick() {
-        System.out.println("MainWindowController:onTaskDoneButtonClick() -> button pressed");
-        Model model = Model.getInstance();
-        /*
-        if (!model.writeDoneTask()) {
-            System.err.println("Aufgabe konnte nicht fertiggestellt werden!");
-        }
-         */
-
-    }
-
-    /**
      * Knopf um Aufgabenerstellungsfenster zu laden und anzuzeigen
      */
     @FXML
@@ -191,6 +160,37 @@ public class MainWindowController {
         if (!model.signInTask()) {
             System.out.println("(ERR) Model:onTaskSignInButtonClick() Couldn't sign in task!");
         }
+    }
+
+    /**
+     * Knopf um ausgewählte Aufgabe aus Tagesplan auszutragen
+     */
+    @FXML
+    public void onTaskSignOutButtonClick() {
+        System.out.println("MainWindowController:onTaskSignOutButtonClick() -> button pressed");
+        Model model = Model.getInstance();
+        //System.out.println(model.selectedStringProperty().getValue());
+        /*
+        if (!model.writeSignOutTask()) {
+            System.err.println("Aufgabe konnte nicht ausgetragen werden!");
+        }
+         */
+
+    }
+
+    /**
+     * Knopf um ausgewählte Aufgabe als abgearbeitet zu speichern
+     */
+    @FXML
+    public void onTaskDoneButtonClick() {
+        System.out.println("MainWindowController:onTaskDoneButtonClick() -> button pressed");
+        Model model = Model.getInstance();
+        /*
+        if (!model.writeDoneTask()) {
+            System.err.println("Aufgabe konnte nicht fertiggestellt werden!");
+        }
+         */
+
     }
 
     /**

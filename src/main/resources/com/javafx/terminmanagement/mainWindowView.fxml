@@ -54,7 +54,8 @@
                                 onAction="#onTaskChangeButtonClick"/>
                         <Button text="Aufgabe löschen"
                                 onAction="#onTaskDeleteButtonClick"/>
-                        <Button text="Aufgabe eintragen" onAction="#onTaskSignInButtonClick"/>
+                        <Button text="Aufgabe eintragen"
+                                onAction="#onTaskSignInButtonClick"/>
                     </VBox>
                 </right>
             </BorderPane>
