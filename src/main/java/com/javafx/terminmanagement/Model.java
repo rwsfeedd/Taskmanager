@@ -792,13 +792,13 @@ public class Model {
      * @return Rückgabe von true, wenn alle Aufgaben erfolgreich in die Datei geschrieben wurden
      */
     private boolean writeTasksJson(File fileTasks, List<Task> listTasks, List<Integer> planToday) {
-        System.out.println("Model:writeTaskJson(File: " + fileTasks.toString());
+        System.out.println("(INFO) Model:writeTaskJson(File: " + fileTasks.toString());
         System.out.println(", listTasksEntrys:" + listTasks.toString());
 
         try{
             if (!fileTasks.exists()) {
                 if (!fileTasks.createNewFile()) {
-                    System.err.println("Model:writeTaskJson() Datenfile konnte nicht erstellt werden!");
+                    System.err.println("(ERR) Model:writeTaskJson() Datenfile konnte nicht erstellt werden!");
                     //TODO Errorhandling
                 }
             }
@@ -1038,17 +1038,17 @@ public class Model {
 
     public void setTaskListProperty(Collection<Task> newList) {
         taskListProperty.setAll(newList);
-        System.out.println("Model:setTaskListProperty(Collection<Task> newList" + taskListProperty().get().toString() + ")");
+        System.out.println("(INFO) Model:setTaskListProperty(Collection<Task> newList" + taskListProperty().get().toString() + ")");
     }
 
     public void setDailyListProperty(Collection<Task> newList) {
         dailyListProperty.setAll(newList);
-        System.out.println("Model:setDailyListProperty(Collection<Task> newList" + dailyListProperty().get().toString() + ")");
+        System.out.println("(INFO) Model:setDailyListProperty(Collection<Task> newList" + dailyListProperty().get().toString() + ")");
     }
 
     public void setPlannedIdListProperty(Collection<Integer> newList) {
         plannedIdListProperty().setAll(newList);
-        System.out.println("Model:setPlannedIdListProperty(Collection<Task> newList" + plannedIdListProperty().get().toString() + ")");
+        System.out.println("(INFO) Model:setPlannedIdListProperty(Collection<Task> newList" + plannedIdListProperty().get().toString() + ")");
     }
 
     public void setPlanDate(LocalDate newDate) {
