@@ -5,6 +5,18 @@ Deployment:
 ---
 Unter build/distributions sind fertige Builds der Applikation für Windows enthalten. Die Datei muss zuerst in einer Umgebung entpackt werden, wo der ausführende Nutzer Schreib- und Leserechte hat. Danach kann in dem bin-Verzeichnis die Windows-Batchdatei ausgeführt werden um das Programm zu starten.
 ___
+Verwendung:
+---
+Der Benutzer kann durch Betätigen des jeweiligen Tabs zu den verschiedenen Fenstern gelangen.
+Die Fenster sind: 
+- Vergangenheit -> noch nicht implementiert
+- Tagesliste -> Tagesaufgaben sehen, austragen, (fertigstellen)
+- Zukunft -> noch nicht implementiert
+- Aufgabenliste -> alle Aufgaben jeweils sehen, erstellen, bearbeiten oder löschen
+- erstellen -> Aufgabe erstellen
+- ändern -> in Aufgabenliste ausgewählte Aufgabe bearbeiten
+___
 Roadmap:
 ---
-Aufgabenplanimplementierung ändern mit Aufgabenplanklasse, komplette CRUD-Funktionalität wiederherstellen(funktioniert: Aufgaben erstellen, bearbeiten und löschen, noch fehlend: Aufgaben in den Tagesplan eintragen und austragen), TableView statt ListView implementieren, History implementieren, Zukunftsaufgabenpläne implementieren, SQLite als Datenbank, Fehlerbehandlung optimieren, Tests implementieren
+Aufgabenplanimplementierung für Vergangenheit und Zukunft, TableView statt ListView implementieren, History implementieren, Zukunftsaufgabenpläne implementieren, SQLite als Datenbank, Fehlerbehandlung optimieren, Tests implementieren
+
