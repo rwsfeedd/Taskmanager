@@ -81,11 +81,10 @@ public class MainWindowController {
          */
 
         allList.itemsProperty().bind(model.taskListProperty());
-        //model.taskListProperty().bind(model.taskListProperty());
         model.selectedTaskProperty().bind(allList.selectionModelProperty().getValue().selectedItemProperty());
-        model.selectedTaskProperty().bind(dailyList.selectionModelProperty().getValue().selectedItemProperty());
 
         dailyList.itemsProperty().bind(model.dailyListProperty());
+        model.selectedDailyTaskProperty().bind(dailyList.selectionModelProperty().getValue().selectedItemProperty());
 
         //Validierungslabel bereinigen
         model.setNewTaskValidationProperty("");
@@ -143,10 +142,10 @@ public class MainWindowController {
 
     @FXML
     public void onTaskDeleteButtonClick() {
-        System.out.println("MainWindowController:onTaskDeleteButtonClick() -> button pressed");
+        System.out.println("(INFO) MainWindowController:onTaskDeleteButtonClick() -> button pressed");
         Model model = Model.getInstance();
         if (!model.writeDeletedTask()) {
-            System.out.println("Fehler beim Löschen der Aufgabe!");
+            System.out.println("(ERR) MainWindowController:onTaskDeleteButtonClick() Error while trying to delete task!");
         }
 
     }

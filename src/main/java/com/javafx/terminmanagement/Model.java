@@ -44,6 +44,8 @@ public class Model {
     //Property für die Auswahl von einem Element aus ListView von taskOverview
     private final SimpleObjectProperty<Task> selectedTaskProperty = new SimpleObjectProperty<>();
 
+    private final SimpleObjectProperty<Task> selectedDailyTaskProperty = new SimpleObjectProperty<>();
+
     private static int lastId;
 
     //private final SimpleMapProperty<Integer, Task> taskMapProperty = new SimpleMapProperty<>(FXCollections.observableHashMap());
@@ -610,12 +612,12 @@ public class Model {
 
     public boolean writeSignOutTask() {
         //check if any Task was selected
-        if (selectedTaskProperty().getValue() == null) {
+        if (selectedDailyTaskProperty().getValue() == null) {
             return false;
         }
 
         //temporäre Variablen erstellen und mit Werten füllen
-        Task taskToSignOut = selectedTaskProperty().getValue();
+        Task taskToSignOut = selectedDailyTaskProperty().getValue();
         ArrayList<Task> newDailyList = new ArrayList<>(dailyListProperty().getValue());
 
         //if Task exists in dailyList, remove it from dailyList
@@ -1069,6 +1071,10 @@ public class Model {
 
     public SimpleObjectProperty<Task> selectedTaskProperty() {
         return selectedTaskProperty;
+    }
+
+    public SimpleObjectProperty<Task> selectedDailyTaskProperty() {
+        return selectedDailyTaskProperty;
     }
 
     /*
