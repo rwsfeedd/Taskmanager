@@ -606,6 +606,7 @@ public class Model {
         }
 
         setDailyListProperty(newDailyList);
+        setPlannedIdListProperty(newDailyIds);
 
         return true;
     }
@@ -645,26 +646,38 @@ public class Model {
         return true;
     }
 
-    /*
     public boolean writeDoneTask() {
         //Test, ob eine Aufgabe ausgewählt wurde
-        if (selectedStringProperty().getValue() == null) {
+        if (selectedDailyTaskProperty().getValue() == null) {
             return false;
         }
 
         //temporäre Variablen erstellen und mit Werten füllen
-        String taskDone = selectedStringProperty().getValue();
-        ArrayList<String> newTodoList = new ArrayList<>(stringListTodoProperty());
-        ArrayList<String> newPlanList = new ArrayList<>(stringListPlanProperty());
+        Task taskDone = selectedDailyTaskProperty().getValue();
+
+        ArrayList<Task> newDailyList = new ArrayList<>(dailyListProperty().getValue());
+        ArrayList<Integer> newPlannedIdList = new ArrayList<>(plannedIdListProperty().getValue());
 
         //ausgewählte Aufgabe aus temporären Listen entfernen
-        newTodoList.remove(taskDone);
-        newPlanList.remove(taskDone);
+        if (!newPlannedIdList.contains(taskDone.getId())) {
+            System.out.println("(WARN) Model:writeDoneTask() dailyList doesn't contain task, that User want's to writeDone!");
+            return false;
+        }
+        if (!newDailyList.contains(taskDone)) {
+            System.out.println("(WARN) Model:writeDoneTask() dailyList doesn't contain task, that User want's to writeDone!");
+            return false;
+        }
+
+        newDailyList.remove(taskDone);
+        newPlannedIdList.remove(Integer.valueOf(taskDone.getId()));
 
         //temporäre Liste in filePlanning schreiben und Propertys updaten
-        if (writePlanningJson(filePlanning, planDate, newPlanList, newTodoList)) {
-            //stringListProperty für mainWindow updaten
-            stringListPlanProperty().getValue().setAll(newPlanList);
+        if (writeTasksJson(fileTasks, taskListProperty().getValue(), newPlannedIdList)) {
+            setPlannedIdListProperty(newPlannedIdList);
+            setDailyListProperty(newDailyList);
+
+            //Todo write dateLastDone
+            /*
             //stringListTodoProperty updaten
             stringListTodoProperty().getValue().setAll(newTodoList);
             //taskMapProperty für taskOverview updaten
@@ -678,18 +691,19 @@ public class Model {
                     System.err.println("Datum konnte nicht geschrieben werden, weil es Fehler beim Schreiben in das Aufgabenfile gab!");
                     Platform.exit();
                 }
-            } else {
-                System.out.println("Aufgabe aus Aufgabenplan gelöscht, die nicht in Aufgabenliste exisitiert!");
-            }
-
+             */
         } else {
-            return false;
+            System.out.println("(WARN) Model:writeDoneTask() Error while writing doneTask");
         }
 
+        for (Task task : taskListProperty().getValue()) {
+            if (task.equals(taskDone)) {
+                task.setPlanned(false);
+            }
+        }
 
         return true;
     }
-     */
 
     /*
     private boolean writePlanningJson(File filePlanning, LocalDate planDate, List<String> listPlan, List<String> listTodo) {

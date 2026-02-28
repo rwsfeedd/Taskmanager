@@ -180,12 +180,11 @@ public class MainWindowController {
     @FXML
     public void onTaskDoneButtonClick() {
         System.out.println("(INFO) MainWindowController:onTaskDoneButtonClick() -> button pressed");
-        Model model = Model.getInstance();
-        /*
+
         if (!model.writeDoneTask()) {
-            System.err.println("Aufgabe konnte nicht fertiggestellt werden!");
+            System.err.println("(ERR) MainWindowController:onTaskDoneButtonClick() There was an error switching the task to being done!");
         }
-         */
+
 
     }
 
