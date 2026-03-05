@@ -672,7 +672,7 @@ public class Model {
         newPlannedIdList.remove(Integer.valueOf(taskDone.getId()));
 
         //temporäre Liste in filePlanning schreiben und Propertys updaten
-        if (writeTasksJson(fileTasks, taskListProperty().getValue(), newPlannedIdList)) {
+        if (writeTasksJson(fileTasks, new ArrayList<>(taskListProperty().getValue()), newPlannedIdList)) {
             setPlannedIdListProperty(newPlannedIdList);
             setDailyListProperty(newDailyList);
 
@@ -697,9 +697,11 @@ public class Model {
         }
 
         for (Task task : taskListProperty().getValue()) {
+            System.out.println(task.toString());
             if (task.equals(taskDone)) {
                 task.setPlanned(false);
             }
+
         }
 
         return true;
