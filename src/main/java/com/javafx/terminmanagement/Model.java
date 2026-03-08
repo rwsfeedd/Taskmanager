@@ -515,33 +515,43 @@ public class Model {
     }
 
     //Aufgabe aus selectedTaskProperty lesen, aus Aufgabenfile löschen und taskListAllProperty aktualisieren
+
+    /**
+     * can be used to remove a Task from all Lists and Files
+     *
+     * @return true, if Task exists and was succesfully deleted
+     */
     public boolean writeDeletedTask() {
         if (selectedTaskProperty().getValue() == null) return false;
         Task deletedTask = selectedTaskProperty().getValue();
-        //System.out.println("Model:writeDeletedTask() -> Task to delete: " + deletedTask.getName());
 
-        //Aufgabe aus Aufgabenliste löschen
-        ArrayList<Task> listNew = new ArrayList<>(taskListProperty().get());
-
-        int index = -1;
-        for (int i = 0; i < listNew.size(); i++) {
-            if (listNew.get(i).equals(deletedTask)) {
-                index = i;
-                break;
-            }
-        }
-        if (index > -1) {
-            listNew.remove(index);
-        } else {
-            System.out.println("Model:writeDeleteTask() -> attempt to delete nonexistent task!");
-        }
-
-
-        //neue Aufgabenliste schreiben
-        if (!writeTasksJson(fileTasks, listNew, plannedIdListProperty().getValue())) {
+        ArrayList<Task> newTaskList = new ArrayList<>(taskListProperty().get());
+        if (!newTaskList.remove(deletedTask)) {
+            System.out.println("(ERR) Model:writeDeleteTask() -> attempted to delete nonexistent task from newTaskList!");
             return false;
         }
-        setTaskListProperty(FXCollections.observableList(listNew));
+
+        ArrayList<Task> newDailyList = new ArrayList<>(dailyListProperty().getValue());
+        if (!newDailyList.remove(deletedTask)) {
+            System.out.println("(ERR) Model:writeDeleteTask() -> attempted to delete nonexistent task from newDailyList!");
+            return false;
+        }
+
+        ArrayList<Integer> newPlannedIdList = new ArrayList<>(plannedIdListProperty().getValue());
+        if (!newPlannedIdList.remove(Integer.valueOf(deletedTask.getId()))) {
+            System.out.println("(ERR) Model:writeDeleteTask() -> attempted to delete nonexistent task from newPlannedIdList!");
+            return false;
+        }
+
+        if (!writeTasksJson(fileTasks, newTaskList, newPlannedIdList)) {
+            System.out.println("(ERR) Model:writeDeleteTask() -> not able to writeTaskJson( " + fileTasks.toString()
+                    + ", " + newTaskList.toString() + ", " + newPlannedIdList.toString() + ")");
+            return false;
+        }
+
+        setTaskListProperty(FXCollections.observableList(newTaskList));
+        setPlannedIdListProperty(FXCollections.observableList(newPlannedIdList));
+        setDailyListProperty(newDailyList);
 
         /* ergänzen
         //Aufgabe aus TodoListe und planListe löschen und in Datei schreiben, bei vorhandensein
